@@ -10,6 +10,8 @@ Created on Sat Oct 12 15:53:09 2019
 from math import log,sqrt
 import numpy as np
 from random import random
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
 import ezodf
 doc = ezodf.opendoc('taxiSample.ods')
 sheet = doc.sheets[0]
@@ -137,8 +139,17 @@ def JLTransform(rowList): # f described in the article
 
 
 ### --- End of Coin flips JLT --- ###
+    
+### --- FJLT --- ###
 
-n = 1700
+
+notImportedYet = True
+if notImportedYet:
+    from sklearn.datasets import load_digits
+    digits = load_digits()
+    notImportedYet = False
+
+n = len(digits.images)
 c = 1
 eps = 1
 d = 64
@@ -179,14 +190,40 @@ def buildPhi():
             D[i][i] = -1
     return P.dot(H.dot(D))
 
-from sklearn.datasets import load_digits
-digits = load_digits()
+
 
 phi=buildPhi()
 
-vector = np.array(matToList(digits.images[4]))
+#vector = np.array(matToList(digits.images[4]))
+
+### --- End of FJLT --- ###
+
+array = []
+for i in range(len(digits.images)):
+    array.append(phi.dot(matToList(digits.images[i])))
 
 
+
+kmeans = KMeans(n_clusters=5, random_state=4).fit(array)
+kmeans.labels_
+#kmeans.predict([[0, 0], [12, 3]])
+kmeans.cluster_centers_
+
+for center in kmeans.cluster_centers_:
+    #try to see what they correspond to
+    best = (-1,pow(10,10))
+    for i in range(len(array)):
+        #l = matToList(im)
+        l = array[i]
+        dist = 0
+        for j in range(len(l)):
+            dist += abs(center[j]-l[j])
+        if dist < best[1]:
+            best = (i,dist)
+    print(best[0])
+    plt.gray() 
+    plt.matshow(digits.images[best[0]]) 
+    plt.show()
 
 
 
