@@ -7,12 +7,19 @@ Created on Sat Oct 12 15:53:09 2019
 ## Note : the current file reading is sequential, need to find how to directly 
 ## access row i
 
+
+## TODO : find better dataset ( https://leon.bottou.org/projects/infimnist )
+
+
+
+
 from math import log,sqrt
 import numpy as np
 from random import random
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import ezodf
+import time
 doc = ezodf.opendoc('taxiSample.ods')
 sheet = doc.sheets[0]
 
@@ -198,13 +205,32 @@ phi=buildPhi()
 
 ### --- End of FJLT --- ###
 
+
+def evalKMeans(array,centers):
+    total = 0
+    for i in range(len(array)):
+        best = -1
+        for j in range(len(centers)):
+            dist = 0
+            for k in range(len(centers[j])):
+                dist += abs(array[i][k]-centers[j][k])
+            if dist<best or best ==-1:
+                best = dist
+        total += best
+    return total/len(array)
+
+
+
 array = []
 for i in range(len(digits.images)):
     array.append(phi.dot(matToList(digits.images[i])))
 
 
-
+start = time.time()
 kmeans = KMeans(n_clusters=5, random_state=4).fit(array)
+end = time.time()
+print("KMeans took "+str(end-start) +"s.")
+print("KMeans score : "+str(evalKMeans(array,kmeans.cluster_centers_)))
 kmeans.labels_
 #kmeans.predict([[0, 0], [12, 3]])
 kmeans.cluster_centers_
@@ -220,21 +246,36 @@ for center in kmeans.cluster_centers_:
             dist += abs(center[j]-l[j])
         if dist < best[1]:
             best = (i,dist)
-    print(best[0])
     plt.gray() 
     plt.matshow(digits.images[best[0]]) 
     plt.show()
 
 
+    
+array = []
+for i in range(len(digits.images)):
+    array.append(matToList(digits.images[i]))
 
+start = time.time()
+kmeans = KMeans(n_clusters=5, random_state=4).fit(array)
+end = time.time()
+print("KMeans took "+str(end-start) +"s.")
+print("KMeans score : "+str(evalKMeans(array,kmeans.cluster_centers_)))
 
-
-
-
-
-
-
-
+for center in kmeans.cluster_centers_:
+    #try to see what they correspond to
+    best = (-1,pow(10,10))
+    for i in range(len(array)):
+        #l = matToList(im)
+        l = array[i]
+        dist = 0
+        for j in range(len(l)):
+            dist += abs(center[j]-l[j])
+        if dist < best[1]:
+            best = (i,dist)
+    plt.gray() 
+    plt.matshow(digits.images[best[0]]) 
+    plt.show()
 
 
 
