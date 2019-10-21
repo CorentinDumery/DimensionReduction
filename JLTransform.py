@@ -10,9 +10,6 @@ Created on Sat Oct 12 15:53:09 2019
 
 ## TODO : find better dataset ( https://leon.bottou.org/projects/infimnist )
 
-
-
-
 from math import log,sqrt
 import numpy as np
 from random import random
@@ -197,16 +194,12 @@ def buildPhi():
             D[i][i] = -1
     return P.dot(H.dot(D))
 
-
-
 phi=buildPhi()
-
-#vector = np.array(matToList(digits.images[4]))
 
 ### --- End of FJLT --- ###
 
 
-def evalKMeans(array,centers):
+def evalKMeans(array,centers): #average of points to centers
     total = 0
     for i in range(len(array)):
         best = -1
@@ -219,63 +212,48 @@ def evalKMeans(array,centers):
         total += best
     return total/len(array)
 
+def computeKMeans(array):
+    start = time.time()
+    kmeans = KMeans(n_clusters=5, random_state=4).fit(array)
+    end = time.time()
+    print("KMeans took "+str(end-start) +"s.")
+    print("KMeans average error : "+str(evalKMeans(array,kmeans.cluster_centers_)))
+    kmeans.labels_
+    #kmeans.predict([[0, 0], [12, 3]])
+    kmeans.cluster_centers_
+    
+    for center in kmeans.cluster_centers_:
+        #try to see what they correspond to
+        best = (-1,pow(10,10))
+        for i in range(len(array)):
+            #l = matToList(im)
+            l = array[i]
+            dist = 0
+            for j in range(len(l)):
+                dist += abs(center[j]-l[j])
+            if dist < best[1]:
+                best = (i,dist)
+        plt.gray() 
+        plt.matshow(digits.images[best[0]]) 
+        plt.show()
 
+
+### --- Applying KMeans to the post-FJLT data --- ###
 
 array = []
 for i in range(len(digits.images)):
     array.append(phi.dot(matToList(digits.images[i])))
 
-
-start = time.time()
-kmeans = KMeans(n_clusters=5, random_state=4).fit(array)
-end = time.time()
-print("KMeans took "+str(end-start) +"s.")
-print("KMeans score : "+str(evalKMeans(array,kmeans.cluster_centers_)))
-kmeans.labels_
-#kmeans.predict([[0, 0], [12, 3]])
-kmeans.cluster_centers_
-
-for center in kmeans.cluster_centers_:
-    #try to see what they correspond to
-    best = (-1,pow(10,10))
-    for i in range(len(array)):
-        #l = matToList(im)
-        l = array[i]
-        dist = 0
-        for j in range(len(l)):
-            dist += abs(center[j]-l[j])
-        if dist < best[1]:
-            best = (i,dist)
-    plt.gray() 
-    plt.matshow(digits.images[best[0]]) 
-    plt.show()
+computeKMeans(array)
 
 
-    
+### --- Applying KMeans to the original data --- ###
+
 array = []
 for i in range(len(digits.images)):
     array.append(matToList(digits.images[i]))
 
-start = time.time()
-kmeans = KMeans(n_clusters=5, random_state=4).fit(array)
-end = time.time()
-print("KMeans took "+str(end-start) +"s.")
-print("KMeans score : "+str(evalKMeans(array,kmeans.cluster_centers_)))
-
-for center in kmeans.cluster_centers_:
-    #try to see what they correspond to
-    best = (-1,pow(10,10))
-    for i in range(len(array)):
-        #l = matToList(im)
-        l = array[i]
-        dist = 0
-        for j in range(len(l)):
-            dist += abs(center[j]-l[j])
-        if dist < best[1]:
-            best = (i,dist)
-    plt.gray() 
-    plt.matshow(digits.images[best[0]]) 
-    plt.show()
+computeKMeans(array)
 
 
 
