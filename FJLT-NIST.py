@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 ## Note : the current file reading is sequential, need to find how to directly
 ##  access row i
@@ -22,29 +22,38 @@ def main():
 
     n = len(digits.images)
 
-    c = 1.
+    c = 1
     eps = 1
     d = 64
     k = int(c*log(n)/(eps**2))+1
 
-    print(type(digits))
+    print()
+    print("Fast Johnson-Lindenstrauss Transform applied to MNIST digit datase")
+    print("n = %d" % n)
+    print("c = %d" % n)
+    print("eps = %d" % eps)
+    print("d = %d" % d)
+    print()
+    print("k = %d" % k)
+
+    # printDigits(digits)
 
     phi = buildPhi(n,k,d)
 
 
-    ### --- Applying KMeans to the post-FJLT data --- ###
-    array = []
-    for i in range(len(digits.images)):
-        array.append(phi.dot(matToList(digits.images[i])))
-
-    computeKMeans(array, digits)
-
-    ### --- Applying KMeans to the original data --- ###
+    print()
+    print("KMeans on the original data...")
     array = []
     for i in range(len(digits.images)):
         array.append(matToList(digits.images[i]))
+    computeKMeans(array, 10, orig_data=digits)
 
-    computeKMeans(array, digits)
+    print()
+    print("FLJT + KMeans...")
+    array = []
+    for i in range(len(digits.images)):
+        array.append(phi.dot(matToList(digits.images[i])))
+    computeKMeans(array, 10, orig_data=digits)
 
 ### --- FJLT --- ###
 
@@ -77,9 +86,10 @@ def buildPhi(n, k, d):
     for i in range(d):
         for j in range(d):
             H[i][j] = pow(d,-1/2)*pow(-1,binaryDot(i-1,j-1))
-        if random()>1/2:
+
+        if random() > 1/2:
             D[i][i] =  1
-        else :
+        else:
             D[i][i] = -1
     return P.dot(H.dot(D))
 
@@ -99,19 +109,21 @@ def evalKMeans(array,centers): #average of points to centers
         total += best
     return total/len(array)
 
-def computeKMeans(array, digits):
+def computeKMeans(array, k, orig_data=digits):
     start = time.time()
-    kmeans = KMeans(n_clusters=5, random_state=4).fit(array)
+    kmeans = KMeans(n_clusters=k
+        # , random_state=4
+        ).fit(array)
     end = time.time()
-    print("KMeans took "+str(end-start) +"s.")
-    print("KMeans average error : "+str(evalKMeans(array,kmeans.cluster_centers_)))
-    kmeans.labels_
-    #kmeans.predict([[0, 0], [12, 3]])
-    kmeans.cluster_centers_
+    print("KMeans took "+str(end-start) +" secs.")
+    print("KMeans avg. error: "+str(evalKMeans(array, kmeans.cluster_centers_)))
+    #print(kmeans.labels_)
+    #print(kmeans.cluster_centers_)
 
+    """
     for center in kmeans.cluster_centers_:
         #try to see what they correspond to
-        best = (-1,pow(10,10))
+        best = (-1,np.inf)
         for i in range(len(array)):
             #l = matToList(im)
             l = array[i]
@@ -120,8 +132,16 @@ def computeKMeans(array, digits):
                 dist += abs(center[j]-l[j])
             if dist < best[1]:
                 best = (i,dist)
-        plt.imshow(digits.images[best[0]], cmap='gray')
-        plt.show()
+        printDigit(digits.images[best[0]])
+    """
+
+def printDigits(digits):
+    for i in range(1, len(digits)):
+        printDigit(digits.images[i])
+
+def printDigit(digit):
+    plt.imshow(digit, cmap='gray')
+    plt.show()
 
 if __name__ == "__main__":
     main()
