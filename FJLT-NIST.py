@@ -65,8 +65,8 @@ def main():
     #########################################################################
     #########################################################################
 
-    data, labels, n_clusters = loadDigits()
-    # data, labels, n_clusters = loadMNIST()
+    #data, labels, n_clusters = loadDigits()
+    data, labels, n_clusters = loadMNIST()
 
     c = 1
     epss = [1, 10, 100, 1000, 10000]
@@ -82,7 +82,9 @@ def main():
     print()
     print()
     print("Pure KMeans...")
-    evaluateKMeans(data, n_clusters, labels)
+    #orig_data = [descriptor(entry) for entry in data]
+    orig_data = [entry for entry in data]
+    evaluateKMeans(orig_data, n_clusters, labels, 5)
 
     for eps in epss:
         print()
@@ -91,8 +93,9 @@ def main():
         print("Dim. reduction: %d -> %d" % (d, k))
 
         phi = FJLT_phi(n,k,d)
+        #reduced_data = [phi.dot(descriptor(entry)) for entry in data]
         reduced_data = [phi.dot(entry) for entry in data]
-        evaluateKMeans(reduced_data, n_clusters, labels)
+        evaluateKMeans(reduced_data, n_clusters, labels, 5)
 
     print()
 
@@ -129,21 +132,24 @@ def FJLT_phi(n, k, d):
 
 ### --- End of FJLT --- ###
 
-def evaluateKMeans(data, k, labels):
+def evaluateKMeans(data, k, labels, R=2):
     n = len(data)
 
-    start = time.time()
-    kmeans = KMeans(n_clusters=k
-        # , random_state=4
-        ).fit(data)
-    end = time.time()
+    score = 0
+    time_elapsed  = 0.
 
-    predictions = kmeans.predict(data)
+    for i in range(R):
+        time_elapsed -= time.time()
+        kmeans = KMeans(n_clusters=k
+            # , random_state=4
+            ).fit(data)
+        time_elapsed += time.time()
 
-    score = sum([1 for i,j in zip(predictions, labels) if i == j])
+        predictions = kmeans.predict(data)
+        score += sum([1 for i,j in zip(predictions, labels) if i == j])
 
-    print("KMeans took %f secs." % (end-start))
-    print("KMeans precision: %f" % (score/n))
+    print("KMeans took %f secs." % (time_elapsed/R))
+    print("KMeans precision: %f" % (score/R/n))
     #print(kmeans.labels_)
     #print(kmeans.cluster_centers_)
 
@@ -169,6 +175,58 @@ def plotImgs(digits):
 def plotImg(digit):
     plt.imshow(digit, cmap='gray')
     plt.show()
+
+#### OTHER ####
+# This serves for linearizing the matrix without losing too much
+#  of its 2d intter structure
+def descriptor(img, depth=3):
+    return img
+
+    feats = []
+
+    #############################################################################
+    # TODO: YOUR CODE HERE                                                      #
+    #############################################################################
+    L = depth-1
+
+        # This recursive function performs the spacial pyramid
+    #  It accepts the image, the depth level and the reference of the list where to
+    #  append the histograms.
+    def deep_describe(img, l, current_feats):
+        def level_weight(l):
+            if l == 0: return 1./2**L
+            else:      return 1./2**(L-l+1)
+
+        # Base case
+        if l > L: return
+
+        H, W = img.shape
+
+        # For each descriptor, find the nearest neighbor, construct the histogram
+        #  and append it to our global feature vector
+        descriptor = np.mean(img)
+        current_feats.append(descriptor * level_weight(l))
+
+        # Iterate on the 4 subimages
+        #  Note: there is a potential out-of-one error caused by odd img dimensions
+        #   but I thought this iterative code would generalize more easily
+        #   and would be more elegant than hardcoding 4 static calls to deep_describe.
+        #   The price to pay for the elegance here is just for some thin
+        #   central areas of the picture to be potentially ignored for dense sift
+        h_2 = H//2
+        w_2 = W//2
+        for h in [0, H-h_2]:
+            for w in [0, W-w_2]:
+                deep_describe(img[h:h+h_2,w:w+w_2], l+1, current_feats)
+
+    img_feats = []
+    img_l = int(np.sqrt(len(img)))
+    if int(np.prod(img.shape)) != img_l*img_l:
+        print("ERROR delinearizing: %d != %d" % int(np.prod(img.shape)), img_l*img_l)
+
+    deep_describe(img.reshape(img_l, img_l), 0, img_feats)
+    img_feats /= np.linalg.norm(np.array(img_feats))
+    return np.array(img_feats)
 
 if __name__ == "__main__":
     main()
