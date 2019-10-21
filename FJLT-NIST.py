@@ -15,22 +15,36 @@ import time
 from sklearn.datasets import load_digits
 import sys
 
+##########################################################
+######################## DATASETS ########################
+##########################################################
 
 def loadDigits():
+    print("Loading sklearn's 'digit' dataset...")
+
     n_clusters = 10
-    image_size = 8
-    image_pixels = image_size * image_size
+    # image_size = 8
+    # image_pixels = image_size * image_size
 
     digits = load_digits()
     return digits.data, digits.target, n_clusters
 
+# This dataset was derived by concatenating the following two files
+# - https://www.python-course.eu/data/mnist/mnist_train.csv
+# - https://www.python-course.eu/data/mnist/mnist_test.csv
+# into data/mnist.csv
+# Source: https://www.python-course.eu/neural_network_mnist.php
 def loadMNIST():
-    n_clusters = 10
-    image_size = 28
-    image_pixels = image_size * image_size
+    print("Loading MNIST dataset...")
 
-    mnist = np.loadtxt("data/mnist/mnist_test.csv", delimiter=",")/255
-    # ... mnist = np.loadtxt("data/mnist.csv", delimiter=",")/255
+    n_clusters = 10
+    # image_size = 28
+    # image_pixels = image_size * image_size
+
+    # Any of these will work, choose depending on the size you want
+    mnist = np.loadtxt("data/mnist/mnist_test.csv", delimiter=",")     # 18MB
+    # mnist = np.loadtxt("data/mnist/mnist_train.csv", delimiter=",")  # 109MB
+    # mnist = np.loadtxt("data/mnist.csv", delimiter=",")              # 127MB
 
     fac = 0.99 / 255
     data   = np.asfarray(mnist[:, 1:]) * fac + 0.01
@@ -38,39 +52,47 @@ def loadMNIST():
 
     return data, labels, n_clusters
 
+##########################################################
+####################### ENTRY POINT ######################
+##########################################################
+
 def main():
 
-    # data, labels, n_clusters = loadDigits()
-    data, labels, n_clusters = loadMNIST()
+    print()
+    print("### Fast Johnson-Lindenstrauss Transform ###")
+    print()
 
-    n = len(data)
+    #########################################################################
+    #########################################################################
+
+    data, labels, n_clusters = loadDigits()
+    # data, labels, n_clusters = loadMNIST()
 
     c = 1
-    eps = 1
-    d = data.shape[1]
-    k = int(c*log(n)/(eps**2))+1
+    epss = [1, 10, 100, 1000, 10000]
+
+    #########################################################################
+    #########################################################################
+
+    n, d = data.shape
+
+    print("n, d = %d * %d" % (n, d))
+    print("# of clusters = %d" % n_clusters)
 
     print()
-    print("Fast Johnson-Lindenstrauss Transform applied to MNIST digit dataset")
-    print("n = %d" % n)
-    print("c = %d" % n)
-    print("eps = %d" % eps)
-    print("d = %d" % d)
     print()
-    print("k = %d" % k)
-
-
-    # Apply FJLT
-    phi = FJLT_phi(n,k,d)
-    reduced_data = [phi.dot(entry) for entry in data]
-
-    print()
-    print("KMeans on the original data...")
+    print("Pure KMeans...")
     evaluateKMeans(data, n_clusters, labels)
 
-    print()
-    print("FLJT + KMeans...")
-    evaluateKMeans(reduced_data, n_clusters, labels)
+    for eps in epss:
+        print()
+        print("FLJT + KMeans... (c, eps =  %d, %d)" % (c, eps))
+        k = int(c*log(n)/(eps**2))+1
+        print("Dim. reduction: %d -> %d" % (d, k))
+
+        phi = FJLT_phi(n,k,d)
+        reduced_data = [phi.dot(entry) for entry in data]
+        evaluateKMeans(reduced_data, n_clusters, labels)
 
     print()
 
@@ -79,7 +101,7 @@ def main():
 def binaryDot(x,y):
     xb = bin(x)[2:]
     yb = bin(y)[2:]
-    res =0
+    res = 0
     for i in range(min(len(xb),len(yb))):
         if xb[i]==yb[i] and xb[i]==1:
             res += 1
@@ -91,7 +113,7 @@ def FJLT_phi(n, k, d):
     P = np.zeros((k,d))
     for i in range(k):
         for j in range(d):
-            if random()<q:
+            if random() < q:
                 P[i][j] = np.random.normal(0,1/q)
     H = np.zeros((d,d))
     D = np.zeros((d,d))
@@ -120,10 +142,8 @@ def evaluateKMeans(data, k, labels):
 
     score = sum([1 for i,j in zip(predictions, labels) if i == j])
 
-    err = float(n-score)/n
-
     print("KMeans took %f secs." % (end-start))
-    print("KMeans error: %f" % err)
+    print("KMeans precision: %f" % (score/n))
     #print(kmeans.labels_)
     #print(kmeans.cluster_centers_)
 
@@ -139,14 +159,14 @@ def evaluateKMeans(data, k, labels):
                 dist += abs(center[j]-l[j])
             if dist < best[1]:
                 best = (i,dist)
-        printDigit(orig_data[best[0]])
+        plotImg(orig_data[best[0]])
     """
 
-def printDigits(digits):
+def plotImgs(digits):
     for i in range(1, len(digits)):
-        printDigit(digits[i])
+        plotImg(digits[i])
 
-def printDigit(digit):
+def plotImg(digit):
     plt.imshow(digit, cmap='gray')
     plt.show()
 
