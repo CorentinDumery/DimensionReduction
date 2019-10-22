@@ -86,38 +86,10 @@ def entryToArray(rowNumber):
 
 ### --- Coin flips JLT --- ###
 
-# Note : in the article they only prove their JLT works for k > k0 > 25 so it's
-# kinda useless, but I guess we can still use it as a comparison for low k, in
-# question 2 if I remember correctly we don't need to prove stuff
-
-R = np.zeros((0,0))
-n = 25
-d = 17
-k = -1
 eps = 0.99
 beta = 0.01
-
-def buildR():
-    global k,R
-    k0 = log(n)*(4+2*beta)/(eps*eps/2 - (eps**3)/3)
-    k = int(k0)+1
-    R = np.zeros((d,k))
-    for i in range(d):
-        for j in range(k):
-            die = random()
-            if die < 1/6:
-                R[i][j] = 1
-            elif die < 2/6:
-                R[i][j] = -1
-            else :
-                R[i][j] = 0
-
-def JLTransform(rowList): # f described in the article
-    if k==-1:
-        buildR()
-    print(k)
-    return (1/sqrt(k))*rowList.dot(R)
-
+k0 = log(n)*(4+2*beta)/(eps*eps/2 - (eps**3)/3)
+k = int(k0)+1
+(1/sqrt(k))*rowList.dot(R)
 
 ### --- End of Coin flips JLT --- ###
-    

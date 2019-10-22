@@ -59,14 +59,14 @@ def loadMNIST():
 def main():
 
     print()
-    print("### Fast Johnson-Lindenstrauss Transform ###")
+    print("### Johnson-Lindenstrauss Transform ###")
     print()
 
     #########################################################################
     #########################################################################
 
-    #data, labels, n_clusters = loadDigits()
-    data, labels, n_clusters = loadMNIST()
+    data, labels, n_clusters = loadDigits()
+    #data, labels, n_clusters = loadMNIST()
 
     cs = [1, 10, 100]
     epss = [0.1, 0.5, 1., 2., 3.]
@@ -82,9 +82,10 @@ def main():
     print()
     print()
     print("Pure KMeans...")
-    #orig_data = [descriptor(entry) for entry in data]
-    orig_data = [entry for entry in data]
-    evaluateKMeans(orig_data, n_clusters, labels, 5)
+
+    #data = [descriptor(entry) for entry in data]
+
+    evaluateKMeans(data, n_clusters, labels, 5)
 
     for c in cs:
         for eps in epss:
@@ -96,26 +97,54 @@ def main():
             print("FLJT + KMeans... (c, eps =  %d, %f)" % (c, eps))
             print("Dim. reduction: %d -> %d" % (d, k))
 
-            phi = FJLT_phi(n,k,d)
+            # phi = FJLT_phi(n, d, k)
+            phi = Achlioptas_phi(n, d, k)
+
             #reduced_data = [phi.dot(descriptor(entry)) for entry in data]
-            reduced_data = [phi.dot(entry) for entry in data]
+
+            reduced_data = data.dot(phi.T)
             evaluateKMeans(reduced_data, n_clusters, labels, 5)
 
     print()
 
 ### --- FJLT --- ###
 
-def binaryDot(x,y):
-    xb = bin(x)[2:]
-    yb = bin(y)[2:]
-    res = 0
-    for i in range(min(len(xb),len(yb))):
-        if xb[i]==yb[i] and xb[i]==1:
-            res += 1
-    return res % 2
+# Note : in the article they only prove their JLT works for k > k0 > 25 so it's
+# kinda useless, but I guess we can still use it as a comparison for low k, in
+# question 2 if I remember correctly we don't need to prove stuff
 
-def FJLT_phi(n, k, d):
+def Achlioptas_phi(n, d, k):
+    print("Using Achlioptas' coin flip method")
+    non_zero = (d/3)**(-1/2)
+
+    phi = np.random.rand(k,d)
+
+    for i in range(k):
+        for j in range(d):
+            if phi[i,j] < 1/6:
+                phi[i,j] = non_zero
+            elif phi[i,j] < 2/6:
+                phi[i,j] = -non_zero
+            else:
+                phi[i,j] = 0
+    return phi
+
+# Fast Johnson-Lindenstrauss Transform
+
+def FJLT_phi(n, d, k):
+    print("Using Fast JL Transform method")
+
     # Note : assume the p in the article is 2
+
+    def binaryDot(x,y):
+        xb = bin(x)[2:]
+        yb = bin(y)[2:]
+        res = 0
+        for i in range(min(len(xb),len(yb))):
+            if xb[i]==yb[i] and xb[i]==1:
+                res += 1
+        return res % 2
+
     q = min(1,(log(n)**2)/d)
     P = np.zeros((k,d))
     for i in range(k):
@@ -137,7 +166,7 @@ def FJLT_phi(n, k, d):
 ### --- End of FJLT --- ###
 
 def evaluateKMeans(data, k, labels, R=2):
-    n = len(data)
+    n = data.shape[0]
 
     time_elapsed  = 0.
     score = 0
@@ -172,7 +201,6 @@ def evaluateKMeans(data, k, labels, R=2):
                 dist += abs(center[j]-l[j])
             if dist < best[1]:
                 best = (i,dist)
-        plotImg(orig_data[best[0]])
     """
 
 def plotImgs(digits):
