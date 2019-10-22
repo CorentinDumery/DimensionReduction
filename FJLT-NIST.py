@@ -68,8 +68,8 @@ def main():
     #data, labels, n_clusters = loadDigits()
     data, labels, n_clusters = loadMNIST()
 
-    c = 1
-    epss = [1, 10, 100, 1000, 10000]
+    cs = [1, 10, 100]
+    epss = [0.1, 0.5, 1., 2., 3.]
 
     #########################################################################
     #########################################################################
@@ -86,16 +86,20 @@ def main():
     orig_data = [entry for entry in data]
     evaluateKMeans(orig_data, n_clusters, labels, 5)
 
-    for eps in epss:
-        print()
-        print("FLJT + KMeans... (c, eps =  %d, %d)" % (c, eps))
-        k = int(c*log(n)/(eps**2))+1
-        print("Dim. reduction: %d -> %d" % (d, k))
+    for c in cs:
+        for eps in epss:
+            k = int(c*log(n)/(eps**2))+1
+            if k > n:
+                continue
 
-        phi = FJLT_phi(n,k,d)
-        #reduced_data = [phi.dot(descriptor(entry)) for entry in data]
-        reduced_data = [phi.dot(entry) for entry in data]
-        evaluateKMeans(reduced_data, n_clusters, labels, 5)
+            print()
+            print("FLJT + KMeans... (c, eps =  %d, %f)" % (c, eps))
+            print("Dim. reduction: %d -> %d" % (d, k))
+
+            phi = FJLT_phi(n,k,d)
+            #reduced_data = [phi.dot(descriptor(entry)) for entry in data]
+            reduced_data = [phi.dot(entry) for entry in data]
+            evaluateKMeans(reduced_data, n_clusters, labels, 5)
 
     print()
 
@@ -135,8 +139,9 @@ def FJLT_phi(n, k, d):
 def evaluateKMeans(data, k, labels, R=2):
     n = len(data)
 
-    score = 0
     time_elapsed  = 0.
+    score = 0
+    error = 0
 
     for i in range(R):
         time_elapsed -= time.time()
@@ -147,9 +152,11 @@ def evaluateKMeans(data, k, labels, R=2):
 
         predictions = kmeans.predict(data)
         score += sum([1 for i,j in zip(predictions, labels) if i == j])
+        error += kmeans.score(data)
 
     print("KMeans took %f secs." % (time_elapsed/R))
     print("KMeans precision: %f" % (score/R/n))
+    print("KMeans score: %f" % (error/R))
     #print(kmeans.labels_)
     #print(kmeans.cluster_centers_)
 
