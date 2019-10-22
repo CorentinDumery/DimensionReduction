@@ -9,12 +9,8 @@ from sklearn.datasets import load_digits
 def loadDigits():
     print("Loading sklearn's 'digit' dataset...")
 
-    n_clusters = 10
-    # image_size = 8
-    # image_pixels = image_size * image_size
-
     digits = load_digits()
-    return digits.data, digits.target, n_clusters
+    return digits.data, digits.target
 
 
 # This dataset was derived by concatenating the following two files
@@ -26,10 +22,6 @@ def loadDigits():
 def loadMNIST():
     print("Loading MNIST dataset...")
 
-    n_clusters = 10
-    # image_size = 28
-    # image_pixels = image_size * image_size
-
     # Any of these will work, choose depending on the size you want
     mnist = np.loadtxt("data/mnist/mnist_test.csv", delimiter=",")     # 18MB
     # mnist = np.loadtxt("data/mnist/mnist_train.csv", delimiter=",")  # 109MB
@@ -39,7 +31,7 @@ def loadMNIST():
     data   = np.asfarray(mnist[:, 1:]) * fac + 0.01
     labels = np.asfarray(mnist[:, :1])
 
-    return data, labels, n_clusters
+    return data, labels
 
 def plotImgs(digits):
     for i in range(1, len(digits)):
@@ -53,7 +45,7 @@ def plotImg(digit):
 # This serves for linearizing the matrix without losing too much
 #  of its 2d intter structure
 def descriptor(img, depth=3):
-    
+
     feats = []
 
     L = depth-1
