@@ -13,6 +13,12 @@ import time
 
 def Achlioptas_phi(n, d, k):
 
+    # eps = 0.99
+    # beta = 0.01
+    # k0 = log(n)*(4+2*beta)/(eps*eps/2 - (eps**3)/3)
+    # k = int(k0)+1
+    # ... (1/sqrt(k))*rowList.dot(R)
+
     non_zero = (d/3)**(-1/2)
 
     phi = np.random.rand(k,d)
