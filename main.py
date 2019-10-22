@@ -23,6 +23,9 @@ from digits_data import *
 ####################### ENTRY POINT ######################
 ##########################################################
 
+# This script compares the performance of dimensionality reduction
+#  by means of JLT transforms methods over some available datasets
+
 def main():
 
     print()
@@ -83,6 +86,7 @@ def main():
 
     print()
 
+# Use KMeans as clustering method for comparison
 def evaluateKMeans(data, k, labels, R=2):
     n = data.shape[0]
 

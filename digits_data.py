@@ -16,11 +16,12 @@ def loadDigits():
     digits = load_digits()
     return digits.data, digits.target, n_clusters
 
-    # This dataset was derived by concatenating the following two files
-    # - https://www.python-course.eu/data/mnist/mnist_train.csv
-    # - https://www.python-course.eu/data/mnist/mnist_test.csv
-    # into data/mnist.csv
-    # Source: https://www.python-course.eu/neural_network_mnist.php
+
+# This dataset was derived by concatenating the following two files
+# - https://www.python-course.eu/data/mnist/mnist_train.csv
+# - https://www.python-course.eu/data/mnist/mnist_test.csv
+# into data/mnist.csv
+# Source: https://www.python-course.eu/neural_network_mnist.php
 
 def loadMNIST():
     print("Loading MNIST dataset...")
@@ -48,17 +49,13 @@ def plotImg(digit):
     plt.imshow(digit, cmap='gray')
     plt.show()
 
-#### OTHER ####
+############################ OTHER ############################
 # This serves for linearizing the matrix without losing too much
 #  of its 2d intter structure
 def descriptor(img, depth=3):
-    return img
-
+    
     feats = []
 
-    #############################################################################
-    # TODO: YOUR CODE HERE                                                      #
-    #############################################################################
     L = depth-1
 
         # This recursive function performs the spacial pyramid
