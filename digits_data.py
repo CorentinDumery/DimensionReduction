@@ -29,7 +29,7 @@ def loadMNIST():
 
     fac = 0.99 / 255
     data   = np.asfarray(mnist[:, 1:]) * fac + 0.01
-    labels = np.asfarray(mnist[:, :1])
+    labels = np.asfarray(mnist[:, :1]).flatten()
 
     return data, labels
 

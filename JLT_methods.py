@@ -31,7 +31,11 @@ def Achlioptas_phi(n, d, k):
                 phi[i,j] = -non_zero
             else:
                 phi[i,j] = 0
-    return phi
+
+    # TODO: investigate interesting results with:
+    #    return phi
+
+    return (1/sqrt(k))*phi
 
 # Fast Johnson-Lindenstrauss Transform
 
