@@ -58,6 +58,8 @@ def Achlioptas_phi(n, d, k):
 
 def FJLT_phi(n, d, k):
     # Note : assume the p in the article is 2
+    
+    print("\t\tEpsilon factor of the approximation: %f" % (1/(sqrt(k)))
 
     def binaryDot(x,y):
         xb = bin(x)[2:]
