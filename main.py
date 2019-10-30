@@ -101,16 +101,16 @@ def evaluateKMeans(data, k, gt_labels, R=2):
     n, d = data.shape
 
     time_elapsed  = 0.
-    accuracy = 0
-    score = 0
-    score2 = 0
-    error = 0
+    #accuracy = 0
+    #score = 0
+    #score2 = 0
+    #error = 0
 
     # Source https://stackoverflow.com/questions/28344660/how-to-identify-cluster-labels-in-kmeans-scikit-learn
     # Rosenberg and Hirschberg (2007)
     # https://scikit-learn.org/stable/modules/clustering.html#homogeneity-completeness
-    homogeneity = 0
-    completeness = 0
+    #homogeneity = 0
+    #completeness = 0
     v_measure = 0
 
     for r in range(R):
@@ -144,10 +144,10 @@ def evaluateKMeans(data, k, gt_labels, R=2):
                         good += 1
 
         #score        += adhoc_metric/(2 * n**2)
-        score2       += good/total_good
-        error        += kmeans.score(data)
-        homogeneity  += metrics.homogeneity_score(gt_labels, kmeans.labels_)
-        completeness += metrics.completeness_score(gt_labels, kmeans.labels_)
+        #score2       += good/total_good
+        #error        += kmeans.score(data)
+        #homogeneity  += metrics.homogeneity_score(gt_labels, kmeans.labels_)
+        #completeness += metrics.completeness_score(gt_labels, kmeans.labels_)
         v_measure    += metrics.v_measure_score(gt_labels, kmeans.labels_)
 
     print("\t\tTime: %f secs." % (time_elapsed/R))

@@ -12,11 +12,12 @@ import time
 # question 2 if I remember correctly we don't need to prove stuff
 
 def Achlioptas_phi(n, d, k):
-    #Estimation of the transforms accuracy :
-    #beta is set such that we get "good" results with a >= 2/3 probability
-    #then epsilon is deduced from the rest and defines how "good" it actually is
-    beta = log(3)/log(n) 
-    
+
+    #Estimation of the transform's accuracy:
+    # beta is set such that we get "good" results with a >= 2/3 probability
+    # then epsilon is deduced from the rest and defines how "good" it actually is
+    beta = log(3)/log(n)
+
     x0 = 0
     x1 = 1
     objective = log(n)*(4+2*beta)/k
@@ -36,10 +37,10 @@ def Achlioptas_phi(n, d, k):
         eps = x
         print("\t\tEpsilon factor of the approximation: %f" % (eps))
 
-    non_zero = (d/3)**(-1/2)
-
+    # Core routing
     phi = np.random.rand(k,d)
 
+    non_zero = (d/3)**(-1/2)
     for i in range(k):
         for j in range(d):
             if phi[i,j] < 1/6:
@@ -58,7 +59,7 @@ def Achlioptas_phi(n, d, k):
 
 def FJLT_phi(n, d, k):
     # Note : assume the p in the article is 2
-    
+
     print("\t\tEpsilon factor of the approximation: %f" % (1/(sqrt(k)))
 
     def binaryDot(x,y):
