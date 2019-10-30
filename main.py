@@ -48,9 +48,7 @@ def main():
     test_problems = [kmeans_]
 
     dim_red_factor = [0.5, 0.2, 0.1, 0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]
-    cs = [1, 10, 100]
-    epss = [0.1, 0.5, 1., 2., 3.]
-
+    
     #########################################################################
     #########################################################################
 
@@ -75,7 +73,7 @@ def main():
         # For test problem
         for test_problem in test_problems:
             print("\tPure " + test_problem.__doc__ + "...")
-            naive_labels = evaluate(data, test_problem, n_clusters, labels, R)
+            naive_labels = evaluate(data, test_problem, n_clusters, gt_labels=labels, R=R)
 
             # For some dim. red
             for kn in dim_red_factor:
@@ -89,8 +87,9 @@ def main():
 
                 reduced_data = method_fun(data, k)
 
-                # evaluate(reduced_data, test_problem, n_clusters, labels, R)
-                evaluate(reduced_data, test_problem, n_clusters, naive_labels, R)
+                # if(labels != None)
+                # evaluate(reduced_data, test_problem, n_clusters, gt_labels=labels, R=R)
+                evaluate(reduced_data, test_problem, n_clusters, gt_labels=naive_labels, R=R)
 
     print()
 
@@ -98,21 +97,27 @@ def main():
 def evaluate(data, test_problem, k, gt_labels, R=2):
 
     time_elapsed  = 0.
-    v_measure = 0.
+    v_measure_avg = 0.
+    v_measure_max = 0.
+    v_measure_min = 1.
 
     for r in range(R):
         time_elapsed -= time.time()
         clust = test_problem(data, k)
         time_elapsed += time.time()
-        v_measure    += metrics.v_measure_score(gt_labels, clust)
+        if(gt_labels != None)
+            v_measure = metrics.v_measure_score(gt_labels, clust)
+            v_measure_avg += v_measure
+            v_measure_max = max(v_measure, v_measure_max)
+            v_measure_min = min(v_measure, v_measure_min)
 
-    time_elapsed /= R
-    v_measure    /= R
+    time_elapsed  /= R
+    v_measure_avg /= R
 
     print("\t\tTime: %f secs." % (time_elapsed))
-    print("\t\tV-measure: %0.3f" % (v_measure))
+    print("\t\tv-measure: %0.3f" % (v_measure_min, v_measure_avg, v_measure_max))
 
-    return time_elapsed, v_measure
+    return time_elapsed, v_measure_avg
 
 if __name__ == "__main__":
     main()
