@@ -11,11 +11,12 @@ import time
 # kinda useless, but I guess we can still use it as a comparison for low k, in
 # question 2 if I remember correctly we don't need to prove stuff
 
-def Achlioptas_phi(n, d, k):
+def Achlioptas_phi(data, k):
+    n, d = data.shape
 
-    #Estimation of the transform's accuracy:
-    # beta is set such that we get "good" results with a >= 2/3 probability
-    # then epsilon is deduced from the rest and defines how "good" it actually is
+    # Estimation of the transform's accuracy:
+    #  beta is set such that we get "good" results with a >= 2/3 probability
+    #  then epsilon is deduced from the rest and defines how "good" it actually is
     beta = log(3)/log(n)
 
     x0 = 0
@@ -50,17 +51,17 @@ def Achlioptas_phi(n, d, k):
             else:
                 phi[i,j] = 0
 
-    # TODO: investigate interesting results with:
-    #    return phi
+    phi *= 1/sqrt(k)
 
-    return (1/sqrt(k))*phi
+    return data.dot(phi.T)
 
 # Fast Johnson-Lindenstrauss Transform
 
-def FJLT_phi(n, d, k):
+def FJLT_phi(data, k):
+    n, d = data.shape
     # Note : assume the p in the article is 2
 
-    print("\t\tEpsilon factor of the approximation: %f" % (1/(sqrt(k)))
+    print("\t\tEpsilon factor of the approximation: %f" % (1/(sqrt(k))))
 
     def binaryDot(x,y):
         xb = bin(x)[2:]
@@ -87,6 +88,11 @@ def FJLT_phi(n, d, k):
             D[i][i] =  1
         else:
             D[i][i] = -1
-    return P.dot(H.dot(D))
+
+    phi = P.dot(H.dot(D))
+    ... what to do with phi?
+    return data.dot(phi.T) ?
+    or return ...
+
 
 ### --- End of FJLT --- ###

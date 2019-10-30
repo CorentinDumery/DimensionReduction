@@ -9,16 +9,14 @@
 from math import log,sqrt
 import numpy as np
 from random import random
-from sklearn.cluster import KMeans
-from sklearn.svm import SVC
 import matplotlib.pyplot as plt
 import time
-from sklearn.datasets import load_digits
 from sklearn import metrics
 import sys
 
 from JLT_methods import *
 from digits_data import *
+from test_problems import *
 #from taxis_data import *
 
 ##########################################################
@@ -42,10 +40,11 @@ def main():
     # Number of repeated runs
     R = 5
 
-    # data, labels = loadDigits()
-    data, labels = loadMNIST()
+    data, labels = loadDigits()
+    # data, labels = loadMNIST()
 
     methods = [Achlioptas_phi, FJLT_phi]
+    test_problems = [kmeans_]
 
     cs = [1, 10, 100]
     epss = [0.1, 0.5, 1., 2., 3.]
@@ -56,114 +55,63 @@ def main():
     n, d = data.shape
     n_clusters = len(np.unique(labels))
 
-    print("n, d = %d * %d" % (n, d))
-    print("# of clusters = %d" % n_clusters)
-
-    print()
+    print("n * d = %d * %d" % (n, d))
+    print("k = %d" % n_clusters)
     print("R = %d" % (R))
     print()
-    print("Pure KMeans...")
 
-    #data = [descriptor(entry) for entry in data]
-
-    naive_labels = evaluateKMeans(data, n_clusters, labels, R)
-
+    # For each method
     for method_fun in methods:
 
-        print()
         if method_fun == Achlioptas_phi:
             print("Achlioptas' coin flip method")
         elif method_fun == FJLT_phi:
             print("Fast JL Transform method")
 
-        for c in cs:
-            for eps in epss:
-                k = int(c*log(n)/(eps**2))+1
-                if k > d:
-                    continue
+        print()
 
-                print()
-                print("\tLJT (c, eps =  %d, %.2f) + KMeans..." % (c, eps))
-                print("\t\tDim. reduction: %d -> %d" % (d, k))
+        # For test problem
+        for test_problem in test_problems:
+            print("\tPure " + test_problem.__doc__ + "...")
+            naive_labels = evaluate(data, test_problem, n_clusters, labels, R)
 
-                phi = method_fun(n, d, k)
+            # For some dimensionality ... TODO: remove c and eps
+            for c in cs:
+                for eps in epss:
+                    k = int(c*log(n)/(eps**2))+1
+                    if k > d:
+                        continue
 
-                #reduced_data = [phi.dot(descriptor(entry)) for entry in data]
+                    print()
+                    print("\t\tLJT (c, eps =  %d, %.2f) + %s..." % (c, eps, test_problem.__doc__))
+                    print("\t\tDim. reduction: %d -> %d" % (d, k))
 
-                reduced_data = data.dot(phi.T)
-                # evaluateKMeans(reduced_data, n_clusters, labels, R)
-                evaluateKMeans(reduced_data, n_clusters, naive_labels, R)
+                    reduced_data = method_fun(data, k)
+
+                    # evaluate(reduced_data, test_problem, n_clusters, labels, R)
+                    evaluate(reduced_data, test_problem, n_clusters, naive_labels, R)
 
     print()
 
 # Use KMeans as clustering method for comparison
-def evaluateKMeans(data, k, gt_labels, R=2):
-    n, d = data.shape
+def evaluate(data, test_problem, k, gt_labels, R=2):
 
     time_elapsed  = 0.
-    #accuracy = 0
-    #score = 0
-    #score2 = 0
-    #error = 0
-
-    # Source https://stackoverflow.com/questions/28344660/how-to-identify-cluster-labels-in-kmeans-scikit-learn
-    # Rosenberg and Hirschberg (2007)
-    # https://scikit-learn.org/stable/modules/clustering.html#homogeneity-completeness
-    #homogeneity = 0
-    #completeness = 0
-    v_measure = 0
+    v_measure = 0.
 
     for r in range(R):
-
         time_elapsed -= time.time()
-        kmeans = KMeans(n_clusters=k
-            # , random_state=4
-            ).fit(data)
+        clust = test_problem(data, k)
         time_elapsed += time.time()
+        v_measure    += metrics.v_measure_score(gt_labels, clust)
 
-        predictions = kmeans.predict(data)
+    time_elapsed /= R
+    v_measure    /= R
 
-        # instead of computing the accuracy...
-        #  labels_reassignment = [1,5,2,7,0,...]
-        #  accuracy += metrics.accuracy_score(predictions[labels_reassignment], labels)
+    print("\t\tTime: %f secs." % (time_elapsed))
+    print("\t\tV-measure: %0.3f" % (v_measure))
 
-        # adhoc_metric = 0
-        # for prediction in predictions:
-        #     siblings_pred = [i for i,x in enumerate(predictions) if x == prediction]
-        #     siblings = [i for i,x in enumerate(labels) if x == prediction]
-        #     adhoc_metric += len(set(siblings_pred) & set(siblings))
-
-        # let's compute the rate of good pairs clustered together
-        total_good = 0
-        good = 0
-        for i in range(n):
-            for j in range(i+1, n):
-                if gt_labels[i] == gt_labels[j]:
-                    total_good += 1
-                    if predictions[i] != predictions[j]:
-                        good += 1
-
-        #score        += adhoc_metric/(2 * n**2)
-        #score2       += good/total_good
-        #error        += kmeans.score(data)
-        #homogeneity  += metrics.homogeneity_score(gt_labels, kmeans.labels_)
-        #completeness += metrics.completeness_score(gt_labels, kmeans.labels_)
-        v_measure    += metrics.v_measure_score(gt_labels, kmeans.labels_)
-
-    print("\t\tTime: %f secs." % (time_elapsed/R))
-    # print("\t\tAccuracy: %f" % (score/R))
-    # print("\t\tScore: %f" % (score/R))
-    # print("\t\tScore2: %f" % (score2/R))
-    # print("\t\tEnergy: %.2f"     % (error/R))
-
-    # print("\t\tHomogeneity: %0.3f" % (homogeneity/R))
-    # print("\t\tCompleteness: %0.3f" % (completeness/R))
-    print("\t\tV-measure: %0.3f" % (v_measure/R))
-    #print(kmeans.labels_)
-    #print(kmeans.cluster_centers_)
-
-    # TODO: make these predictions robust (these are the ones for a single run only.)
-    return predictions
+    return time_elapsed, v_measure
 
 if __name__ == "__main__":
     main()
