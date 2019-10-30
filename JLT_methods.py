@@ -51,9 +51,10 @@ def Achlioptas_phi(data, k):
             else:
                 phi[i,j] = 0
 
-    phi *= 1/sqrt(k)
+    print(data.shape)
+    print(phi.shape)
 
-    return data.dot(phi.T)
+    return 1/sqrt(k) * data.dot(phi.T)
 
 # Fast Johnson-Lindenstrauss Transform
 
@@ -90,9 +91,9 @@ def FJLT_phi(data, k):
             D[i][i] = -1
 
     phi = P.dot(H.dot(D))
-    ... what to do with phi?
-    return data.dot(phi.T) ?
-    or return ...
+    print(data.shape)
+    print(phi.shape)
+    return data.dot(phi.T)
 
 
 ### --- End of FJLT --- ###
