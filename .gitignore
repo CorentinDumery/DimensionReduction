@@ -1,6 +1,5 @@
 __pycache__
-data/mnist
-data/mnist.csv
-data/highd
-!data/highd/download.sh
+data/**
+data/*
+!data/*.sh
 !data/taxiSample.ods

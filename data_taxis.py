@@ -17,7 +17,7 @@ def timestampToFloat(timeString):
 def computeScale(textData): # for each column, find a factor to scale values in [0,1]
     global valRange
     valRange = []
-    
+
     for i in range(len(textData)):
             if i == 0:
                 continue
@@ -35,7 +35,7 @@ def computeScale(textData): # for each column, find a factor to scale values in 
                         valRange[j][0] = c
                     if c > valRange[j][1]:
                         valRange[j][1] = c
-                        
+
 
 def distance(columnId,val1,val2): #where val1 and val2 were taken from column columnId
     global valRange
@@ -89,11 +89,11 @@ def entryToNumbers(textData):
             else:
                 l.append((float(textData[i][j])-valRange[j][0])/valRange[j][1])
         res.append(l)
-                
+
     return res
 
 def loadTaxis(numberOfEntries = -1): #-1 for everything (around 7M)
-    with open('yellow_tripdata_2019-01.csv') as csv_file:
+    with open('data/yellow_tripdata_2019-01.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         textData = []
@@ -105,10 +105,10 @@ def loadTaxis(numberOfEntries = -1): #-1 for everything (around 7M)
                 pass
             else:
                 for i in range(17):
-                    line.append(row[i])    
+                    line.append(row[i])
                 textData.append(line)
             line_count += 1
     computeScale(textData)
     numData = entryToNumbers(textData)
-    
+
     return numData,None
