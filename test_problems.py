@@ -15,10 +15,12 @@ def meanshift_(data, k):
     """MeanShift"""
     # The following bandwidth can be automatically detected using
     # Check parameters ...
-    # bandwidth = estimate_bandwidth(data, quantile=0.2, n_samples=500)
+    bandwidth = estimate_bandwidth(data, quantile=0.2, n_samples=500)
 
+    n,k = data.shape
     ms = MeanShift(
-        # bandwidth=bandwidth,
+        bandwidth=2.,
+        seeds=data[np.random.randint(n, size=k)],
         bin_seeding=True
     ).fit(data)
     return ms.labels_

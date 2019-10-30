@@ -13,12 +13,14 @@ import matplotlib.pyplot as plt
 import time
 from sklearn import metrics
 import sys
+import random
 
 from JLT_methods   import *
 from test_problems import *
+
 from data_digits   import *
 from data_highd    import *
-#from data_taxis import *
+from data_taxis    import *
 
 ##########################################################
 ####################### ENTRY POINT ######################
@@ -35,6 +37,8 @@ def main():
     print("#######################################")
     print()
 
+    np.random.seed(0)
+
     #########################################################################
     #########################################################################
 
@@ -42,12 +46,13 @@ def main():
     R = 5
 
     # data, labels = loadDigits()
-    data, labels = loadMNIST()
+    # data, labels = loadMNIST()
     # data, labels = loadTaxis()
-    # data, labels = loadHighD_64()
+    data, labels = loadHighD_1024()
 
     methods = [Achlioptas_phi, FJLT_phi]
-    test_problems = [kmeans_]
+    # test_problems = [kmeans_]
+    test_problems = [meanshift_]
 
     dim_red_factor = [0.5, 0.2, 0.1, 0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]
 

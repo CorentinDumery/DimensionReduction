@@ -5,7 +5,7 @@ import numpy as np
 from random import random
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_digits
-import csv
+import pandas as pd
 
 # Data can be downloaded here : https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2019-01.csv
 
@@ -14,23 +14,24 @@ valRange = []
 def timestampToFloat(timeString):
     return float(timeString[-2:])+float(timeString[-5:-3])*60+float(timeString[-8:-6])*60*60
 
-def computeScale(textData): # for each column, find a factor to scale values in [0,1]
+# for each column, find a factor to scale values in [0,1]
+def computeScale(data):
     global valRange
     valRange = []
 
-    for i in range(len(textData)):
+    for i in range(len(data)):
             if i == 0:
                 continue
             if i == 1:
-                for j in range(len(textData[0])):
+                for j in range(len(data[0])):
                     if not(j==1 or j==2 or j==6):
-                        valRange.append([float(textData[i][j]),float(textData[i][j])])
+                        valRange.append([float(data[i][j]),float(data[i][j])])
                     else :
                         valRange.append("That column is for floats")
                 continue
-            for j in range(len(textData[0])):
+            for j in range(len(data[0])):
                 if not(j==1 or j==2 or j==6):
-                    c = float(textData[i][j])
+                    c = float(data[i][j])
                     if c < valRange[j][0]:
                         valRange[j][0] = c
                     if c > valRange[j][1]:
@@ -90,25 +91,14 @@ def entryToNumbers(textData):
                 l.append((float(textData[i][j])-valRange[j][0])/valRange[j][1])
         res.append(l)
 
-    return res
+    return np.array(res)
 
-def loadTaxis(numberOfEntries = -1): #-1 for everything (around 7M)
-    with open('data/yellow_tripdata_2019-01.csv') as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        line_count = 0
-        textData = []
-        for row in csv_reader:
-            if line_count>numberOfEntries:
-                break
-            line = []
-            if line_count == 0:
-                pass
-            else:
-                for i in range(17):
-                    line.append(row[i])
-                textData.append(line)
-            line_count += 1
-    computeScale(textData)
-    numData = entryToNumbers(textData)
+# Maximum number of entries: ~7M
+def loadTaxis(numberOfEntries = 1000):
+
+    raw_data = pd.read_csv("data/yellow_tripdata_2019-01.csv", header=0, nrows=numberOfEntries).to_numpy()
+
+    scaled_data = computeScale(raw_data)
+    numData = entryToNumbers(scaled_data)
 
     return numData,None

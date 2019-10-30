@@ -30,6 +30,6 @@ P. Fränti, O. Virmajoki and V. Hautamäki, "Fast agglomerative clustering using
 
     print("Loading highd (d=%d) dataset..." % d)
 
-    data   = pd.read_csv("dim%03d.txt" % d, header=None, sep='\s+').to_numpy()
-    labels = pd.read_csv("dim%03d.txt" % d, header=None, sep='\s+').to_numpy()
-    return data, labels
+    data   = pd.read_csv("data/highd/dim%03d.txt" % d, header=None, sep='\s+').to_numpy()
+    # labels = pd.read_csv("data/highd/gt/dim%03d.txt" % d, header=None, sep='\s+').to_numpy()
+    return data, None

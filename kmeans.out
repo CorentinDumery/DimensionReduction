@@ -1,0 +1,103 @@
+#######################################
+### Johnson-Lindenstrauss Transform ###
+#######################################
+
+Loading MNIST dataset...
+n * d = 10000 * 784
+k = 10
+R = 5
+
+Achlioptas' coin flip method
+
+	Pure K-means...
+		Time: 18.414875 secs.
+		v-measure/g-truth:	[0.501 {0.506} 0.521]
+
+	LJT 0.05 + K-means...
+		Dim. reduction: 784 -> 500
+		Epsilon factor of the approximation: 0.476562
+		Time: 10.322228 secs.
+		v-measure/g-truth:	[0.472 {0.482} 0.518]
+		v-measure/baseline:	[0.709 {0.752} 0.767]
+
+	LJT 0.01 + K-means...
+		Dim. reduction: 784 -> 100
+		Warning : output's dimension is too low, the proof doesn't hold.
+		Time: 4.154498 secs.
+		v-measure/g-truth:	[0.434 {0.444} 0.450]
+		v-measure/baseline:	[0.575 {0.580} 0.585]
+
+	LJT 0.005 + K-means...
+		Dim. reduction: 784 -> 50
+		Warning : output's dimension is too low, the proof doesn't hold.
+		Time: 2.594742 secs.
+		v-measure/g-truth:	[0.398 {0.399} 0.400]
+		v-measure/baseline:	[0.503 {0.504} 0.505]
+
+	LJT 0.001 + K-means...
+		Dim. reduction: 784 -> 10
+		Warning : output's dimension is too low, the proof doesn't hold.
+		Time: 1.966856 secs.
+		v-measure/g-truth:	[0.278 {0.280} 0.283]
+		v-measure/baseline:	[0.294 {0.296} 0.298]
+
+	LJT 0.0005 + K-means...
+		Dim. reduction: 784 -> 5
+		Warning : output's dimension is too low, the proof doesn't hold.
+		Time: 1.714685 secs.
+		v-measure/g-truth:	[0.176 {0.176} 0.177]
+		v-measure/baseline:	[0.188 {0.189} 0.190]
+
+	LJT 0.0001 + K-means...
+		Dim. reduction: 784 -> 1
+		Warning : output's dimension is too low, the proof doesn't hold.
+		Time: 0.311919 secs.
+		v-measure/g-truth:	[0.081 {0.082} 0.082]
+		v-measure/baseline:	[0.103 {0.103} 0.104]
+Fast JL Transform method
+
+	Pure K-means...
+		Time: 14.928332 secs.
+		v-measure/g-truth:	[0.501 {0.502} 0.503]
+
+	LJT 0.05 + K-means...
+		Dim. reduction: 784 -> 500
+		Epsilon factor of the approximation: 0.044721
+		Time: 6.721521 secs.
+		v-measure/g-truth:	[0.046 {0.046} 0.046]
+		v-measure/baseline:	[0.078 {0.078} 0.078]
+
+	LJT 0.01 + K-means...
+		Dim. reduction: 784 -> 100
+		Epsilon factor of the approximation: 0.100000
+		Time: 2.435210 secs.
+		v-measure/g-truth:	[0.073 {0.074} 0.074]
+		v-measure/baseline:	[0.079 {0.079} 0.080]
+
+	LJT 0.005 + K-means...
+		Dim. reduction: 784 -> 50
+		Epsilon factor of the approximation: 0.141421
+		Time: 2.177247 secs.
+		v-measure/g-truth:	[0.057 {0.057} 0.057]
+		v-measure/baseline:	[0.062 {0.062} 0.062]
+
+	LJT 0.001 + K-means...
+		Dim. reduction: 784 -> 10
+		Epsilon factor of the approximation: 0.316228
+		Time: 1.262336 secs.
+		v-measure/g-truth:	[0.044 {0.044} 0.044]
+		v-measure/baseline:	[0.042 {0.042} 0.043]
+
+	LJT 0.0005 + K-means...
+		Dim. reduction: 784 -> 5
+		Epsilon factor of the approximation: 0.447214
+		Time: 1.164735 secs.
+		v-measure/g-truth:	[0.055 {0.055} 0.056]
+		v-measure/baseline:	[0.060 {0.060} 0.060]
+
+	LJT 0.0001 + K-means...
+		Dim. reduction: 784 -> 1
+		Epsilon factor of the approximation: 1.000000
+		Time: 0.381073 secs.
+		v-measure/g-truth:	[0.045 {0.046} 0.046]
+		v-measure/baseline:	[0.057 {0.057} 0.057]
