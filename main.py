@@ -15,9 +15,10 @@ from sklearn import metrics
 import sys
 
 from JLT_methods import *
-from digits_data import *
 from test_problems import *
-#from taxis_data import *
+from data_digits import *
+from data_highd import *
+#from data_taxis import *
 
 ##########################################################
 ####################### ENTRY POINT ######################
