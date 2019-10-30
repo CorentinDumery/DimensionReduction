@@ -5,33 +5,37 @@ import numpy as np
 from random import random
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_digits
+import csv
+
+# Data can be downloaded here : https://s3.amazonaws.com/nyc-tlc/trip+data/yellow_tripdata_2019-01.csv
 
 valRange = []
 
 def timestampToFloat(timeString):
     return float(timeString[-2:])+float(timeString[-5:-3])*60+float(timeString[-8:-6])*60*60
 
-def computeScale(): # for each column, find a factor to scale values in [0,1]
+def computeScale(textData): # for each column, find a factor to scale values in [0,1]
     global valRange
     valRange = []
-    for i, row in enumerate(sheet.rows()):
-        if i == 0:
-            continue
-        if i == 1:
-            for j, cell in enumerate(row):
+    
+    for i in range(len(textData)):
+            if i == 0:
+                continue
+            if i == 1:
+                for j in range(len(textData[0])):
+                    if not(j==1 or j==2 or j==6):
+                        valRange.append([float(textData[i][j]),float(textData[i][j])])
+                    else :
+                        valRange.append("That column is for floats")
+                continue
+            for j in range(len(textData[0])):
                 if not(j==1 or j==2 or j==6):
-                    valRange.append([float(cell.value),float(cell.value)])
-                else :
-                    valRange.append("That column is for floats")
-            continue
-        for j, cell in enumerate(row):
-            if not(j==1 or j==2 or j==6):
-                c = float(cell.value)
-                if c < valRange[j][0]:
-                    valRange[j][0] = c
-                if c > valRange[j][1]:
-                    valRange[j][1] = c
-
+                    c = float(textData[i][j])
+                    if c < valRange[j][0]:
+                        valRange[j][0] = c
+                    if c > valRange[j][1]:
+                        valRange[j][1] = c
+                        
 
 def distance(columnId,val1,val2): #where val1 and val2 were taken from column columnId
     global valRange
@@ -68,21 +72,43 @@ def compareTest(row1,row2): #prints all the distances between two entries
         print("Distance("+str(l1[i])+" , "+str(l2[i])+") = " +str(distance(i,l1[i],l2[i])))
 
 
-def entryToArray(rowNumber):
-    l = []
-    for i,row in enumerate(sheet.rows()):
-        if i == rowNumber:
-            for j, cell in enumerate(row):
-                if j==1 or j==2:
-                    l.append(timestampToFloat(cell.value)/60*60*24)
-                elif j==6:
-                    if cell.value=="N":
-                        l.append(0)
-                    else:
-                        l.append(1)
-                elif valRange[j][1]==valRange[j][0]:
+def entryToNumbers(textData):
+    res = []
+    for i in range(len(textData)):
+        l = []
+        for j in range(len(textData[0])):
+            if j==1 or j==2:
+                l.append(timestampToFloat(textData[i][j])/(60*60*24))
+            elif j==6:
+                if textData[i][j]=="N":
                     l.append(0)
                 else:
-                    l.append((float(cell.value)-valRange[j][0])/valRange[j][1])
-    res = np.array([l])
+                    l.append(1)
+            elif valRange[j][1]==valRange[j][0]:
+                l.append(0)
+            else:
+                l.append((float(textData[i][j])-valRange[j][0])/valRange[j][1])
+        res.append(l)
+                
     return res
+
+def loadTaxis(numberOfEntries = -1): #-1 for everything (around 7M)
+    with open('yellow_tripdata_2019-01.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+        textData = []
+        for row in csv_reader:
+            if line_count>numberOfEntries:
+                break
+            line = []
+            if line_count == 0:
+                pass
+            else:
+                for i in range(17):
+                    line.append(row[i])    
+                textData.append(line)
+            line_count += 1
+    computeScale(textData)
+    numData = entryToNumbers(textData)
+    
+    return numData,None
