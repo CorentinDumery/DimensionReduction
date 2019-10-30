@@ -14,10 +14,10 @@ import time
 from sklearn import metrics
 import sys
 
-from JLT_methods import *
+from JLT_methods   import *
 from test_problems import *
-from data_digits import *
-from data_highd import *
+from data_digits   import *
+from data_highd    import *
 #from data_taxis import *
 
 ##########################################################
@@ -47,6 +47,7 @@ def main():
     methods = [Achlioptas_phi, FJLT_phi]
     test_problems = [kmeans_]
 
+    dim_red_factor = [0.5, 0.2, 0.1, 0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]
     cs = [1, 10, 100]
     epss = [0.1, 0.5, 1., 2., 3.]
 
@@ -76,21 +77,20 @@ def main():
             print("\tPure " + test_problem.__doc__ + "...")
             naive_labels = evaluate(data, test_problem, n_clusters, labels, R)
 
-            # For some dimensionality ... TODO: remove c and eps
-            for c in cs:
-                for eps in epss:
-                    k = int(c*log(n)/(eps**2))+1
-                    if k > d:
-                        continue
+            # For some dim. red
+            for kn in dim_red_factor:
+                k = int(kn * n)
+                if k > d or k < 1:
+                    continue
 
-                    print()
-                    print("\t\tLJT (c, eps =  %d, %.2f) + %s..." % (c, eps, test_problem.__doc__))
-                    print("\t\tDim. reduction: %d -> %d" % (d, k))
+                print()
+                print("\t\tLJT %f + %s..." % (kn, test_problem.__doc__))
+                print("\t\tDim. reduction: %d -> %d" % (d, k))
 
-                    reduced_data = method_fun(data, k)
+                reduced_data = method_fun(data, k)
 
-                    # evaluate(reduced_data, test_problem, n_clusters, labels, R)
-                    evaluate(reduced_data, test_problem, n_clusters, naive_labels, R)
+                # evaluate(reduced_data, test_problem, n_clusters, labels, R)
+                evaluate(reduced_data, test_problem, n_clusters, naive_labels, R)
 
     print()
 

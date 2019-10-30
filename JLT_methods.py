@@ -19,6 +19,14 @@ def Achlioptas_phi(data, k):
     #  then epsilon is deduced from the rest and defines how "good" it actually is
     beta = log(3)/log(n)
 
+    """
+    HELP
+    WHAT DO I DO WITH THIS?
+    for c in cs:
+    for eps in epss:
+        k = int(c*log(n)/(eps**2))+1
+
+    """
     x0 = 0
     x1 = 1
     objective = log(n)*(4+2*beta)/k
@@ -50,9 +58,6 @@ def Achlioptas_phi(data, k):
                 phi[i,j] = -non_zero
             else:
                 phi[i,j] = 0
-
-    print(data.shape)
-    print(phi.shape)
 
     return 1/sqrt(k) * data.dot(phi.T)
 
@@ -91,8 +96,6 @@ def FJLT_phi(data, k):
             D[i][i] = -1
 
     phi = P.dot(H.dot(D))
-    print(data.shape)
-    print(phi.shape)
     return data.dot(phi.T)
 
 
