@@ -14,7 +14,7 @@ from sklearn.decomposition import PCA, FactorAnalysis
 # kinda useless, but I guess we can still use it as a comparison for low k, in
 # question 2 if I remember correctly we don't need to prove stuff
 
-def Achlioptas(data, k, y=None, silent=False):
+def Achliop(data, k, y=None, silent=False):
     n, d = data.shape
 
     # Estimation of the transform's "accuracy":
@@ -62,7 +62,7 @@ def Achlioptas(data, k, y=None, silent=False):
 
 # Fast Johnson-Lindenstrauss Transform
 
-def FJLT(data, k, y=None, silent=False):
+def FastJLT(data, k, y=None, silent=False):
     n, d = data.shape
     # Note : assume the p in the article is 2
 
@@ -102,13 +102,13 @@ def FJLT(data, k, y=None, silent=False):
 
 
 # Randomly sample a subset of dimensions
-def sampleDimensions(data, k, y=None, silent=False):
+def sampDim(data, k, y=None, silent=False):
     n, d = data.shape
     nonzero = np.random.choice(d,k,replace=False)
     return data[:,nonzero]
 
 # Select the features with most variance
-def selectMostVarDims(data, k, y=None, silent=False):
+def HVarDim(data, k, y=None, silent=False):
     n, d = data.shape
     vars = data.var(axis=0)
     mostvars = vars.argsort()[-k:]
@@ -124,7 +124,7 @@ def usePCA(data, k, y=None, silent=False):
     pca = PCA(n_components=k)
     return pca.fit_transform(data, y)
 
-def useFactorAnalysis(data, k, y=None, silent=False):
+def FactAna(data, k, y=None, silent=False):
     fa = FactorAnalysis(n_components=k)
     return fa.fit_transform(data, y)
 

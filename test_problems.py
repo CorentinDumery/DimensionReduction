@@ -11,7 +11,7 @@ def kmeans_(data, k):
         ).fit(data)
     return kmeans.labels_
 
-def meanshift_(data, k):
+def mshift_(data, k):
     """MeanShift"""
     # The following bandwidth can be automatically detected using
     # Check parameters ...

@@ -33,8 +33,8 @@ def warn(*args, **kwargs):
 # Number of repeated runs
 R = 3
 
-data, labels, n_clusters = loadDigits()
-# data, labels, n_clusters = loadMNIST()
+# data, labels, n_clusters = loadDigits()
+data, labels, n_clusters = loadMNIST()
 # data, labels, n_clusters = loadTaxis()
 # data, labels, n_clusters = loadHighD_1024()
 
@@ -43,15 +43,15 @@ data, labels, n_clusters = loadDigits()
 #  http://archive.ics.uci.edu/ml/datasets/Dorothea
 #  http://archive.ics.uci.edu/ml/datasets/Dexter
 
-# methods = [Achlioptas, FJLT, sampleDimensions]
-methods = [Achlioptas, FJLT, sampleDimensions, selectMostVarDims, useLDA, usePCA, useFactorAnalysis]
+# methods = [Achliop, FastJLT, sampDim]
+methods = [Achliop, FastJLT, sampDim, HVarDim, useLDA, usePCA, FactAna]
 
 DontTestAgainstGT = True
 CleanOutput = True
 
 # test_problems = [kmeans_]
-test_problems = [kmeans_, meanshift_]
-# test_problems = [meanshift_]
+test_problems = [kmeans_, mshift_]
+# test_problems = [mshift_]
 
 # dim_red_factor = [0.5, 0.2, 0.1, 0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]
 dim_red_factor = [0.5, 0.2, 0.1, 0.01, 0.001, 0.0001]
@@ -77,13 +77,13 @@ def main():
     np.random.seed(0)
 
     methods_names = {
-        "Achlioptas"        : "Achlioptas' coin flip method",
-        "FJLT"              : "Fast JL Transform method",
-        "sampleDimensions"  : "Simple dimensions sampling",
-        "selectMostVarDims" : "Select most variant dimensions",
-        "useLDA"            : "LDA",
-        "usePCA"            : "PCA",
-        "useFactorAnalysis" : "FactorAnalysis",
+        "Achliop"     : "Achlioptas' coin flip method",
+        "FastJLT"        : "Fast JL Transform method",
+        "sampDim"     : "Simple dimensions sampling",
+        "HVarDim"    : "Select high-variance dimensions",
+        "useLDA"         : "LDA",
+        "usePCA"         : "PCA",
+        "FactAna"      : "FactorAnalysis",
     }
 
     n, d = data.shape
@@ -95,16 +95,18 @@ def main():
     # For each method
     for method_fun in methods:
 
-        print()
-
-        try:
-             print(methods_names[method_fun.__name__])
-        except ValueError:
-             print("Please select a transform method")
+        if not CleanOutput:
+            print()
+            try:
+                 print(methods_names[method_fun.__name__])
+            except ValueError:
+                 print("Please select a transform method")
 
         # For test problem
         for test_problem in test_problems:
-            print("\tPure " + test_problem.__doc__ + "...")
+
+            if not CleanOutput:
+                print("\tPure " + test_problem.__doc__ + "...")
 
             test_against = [{'name' : "gr-truth", 'labs' : labels}]
             if labels is None:
@@ -119,8 +121,9 @@ def main():
                 if method_fun == useLDA and k > min(d, len(np.unique(n_clusters))-1):
                     continue
 
-                print("\tLJT %g + %s..." % (kd, test_problem.__doc__))
-                print("\t\tDim. reduction: %d -> %d" % (d, k))
+                if not CleanOutput:
+                    print("\tLJT %g + %s..." % (kd, test_problem.__doc__))
+                    print("\t\tDim. reduction: %d -> %d" % (d, k))
 
 
                 test_against = [{'name' : "gr-truth", 'labs' : labels}, {'name' : "baseline", 'labs' : naive_labels}]
@@ -133,14 +136,26 @@ def main():
 
 # Use KMeans as clustering method for comparison
 def evaluate(data, test_problem, n_clusters, base_labels_arrs, R=2, reduce_by=None):
+    n, d = data.shape
     b = len(base_labels_arrs)
 
-    time_elapsed_avg  = 0.
+
+    method_name = '-'
+    k_name = '-'
+    kd_name = '-'
+    if reduce_by != None:
+        method_fun = reduce_by[0]
+        k = reduce_by[1]
+
+        method_name = method_fun.__name__
+        k_name = str(k)
+        kd_name = "%.5f" % (k/d)
 
     # For each labels to test against
     for i,base in enumerate(base_labels_arrs):
         labels = base['labs']
 
+        time_elapsed_avg  = 0.
         v_measure_avg = 0
         v_measure_min = 1
         v_measure_max = 0
@@ -149,8 +164,6 @@ def evaluate(data, test_problem, n_clusters, base_labels_arrs, R=2, reduce_by=No
         for r in range(R):
 
             if reduce_by != None:
-                method_fun = reduce_by[0]
-                k = reduce_by[1]
                 reduced_data = method_fun(data, k, labels, silent=CleanOutput)
                 if reduced_data.shape[1] != k:
                     ValueError("Error! reduction failed:")
@@ -167,14 +180,27 @@ def evaluate(data, test_problem, n_clusters, base_labels_arrs, R=2, reduce_by=No
             v_measure_min = min(v_measure, v_measure_min)
             v_measure_max = max(v_measure, v_measure_max)
 
-        v_measure_avg  /= R
+        v_measure_avg    /= R
+        time_elapsed_avg /= R
 
         # print("\t\tv-measure/%s:\t[%0.3f {%0.3f} %0.3f]" % (base['name'], v_measure_min, v_measure_avg, v_measure_max))
-        print("\t\tv-measure/%s:\t%0.3f +/- %0.2f" % (base['name'], v_measure_avg, (v_measure_max-v_measure_min)/2/v_measure_avg))
+        if not CleanOutput:
+            print("\t\tv-measure/%s:\t%0.3f +/- %0.2f" % (base['name'], v_measure_avg, (v_measure_max-v_measure_min)/2/v_measure_avg))
+            print("\t\tAvg. time: %f secs." % (time_elapsed_avg))
+        else:
+            print("%d\t%d\t%s\t%s\t%s\t%s\t%s\t%0.3f +/- %0.2f\t%f" % (
+                n,
+                d,
+                test_problem.__name__,
+                base['name'],
+                method_name,
+                k_name,
+                kd_name,
+                v_measure_avg,
+                ((v_measure_max-v_measure_min)/2/v_measure_avg),
+                time_elapsed_avg,
+                ))
 
-    time_elapsed_avg /= (R*len(base_labels_arrs))
-
-    print("\t\tAvg. time: %f secs." % (time_elapsed_avg))
 
     return clust
 
