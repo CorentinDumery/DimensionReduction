@@ -14,7 +14,7 @@ from sklearn.decomposition import PCA, FactorAnalysis
 # kinda useless, but I guess we can still use it as a comparison for low k, in
 # question 2 if I remember correctly we don't need to prove stuff
 
-def Achlioptas(data, k, y=None):
+def Achlioptas(data, k, y=None, silent=False):
     n, d = data.shape
 
     # Estimation of the transform's "accuracy":
@@ -26,7 +26,8 @@ def Achlioptas(data, k, y=None):
         beta = log(3)/log(n)
         objective = log(n)*(4+2*beta)/k
         if (objective>0.1666):
-            print("\t\tWarning : output's dimension is too low, the proof doesn't hold.")
+            if not silent:
+                print("\t\tWarning : output's dimension is too low, the proof doesn't hold.")
         else:
             precision = 0.001
             while True:
@@ -39,7 +40,8 @@ def Achlioptas(data, k, y=None):
                 else:
                     break
             eps = x
-            print("\t\tEpsilon factor of the approximation: %f" % (eps))
+            if not silent:
+                print("\t\tEpsilon factor of the approximation: %f" % (eps))
 
     estEpsilon(k,n)
 
@@ -60,11 +62,12 @@ def Achlioptas(data, k, y=None):
 
 # Fast Johnson-Lindenstrauss Transform
 
-def FJLT(data, k, y=None):
+def FJLT(data, k, y=None, silent=False):
     n, d = data.shape
     # Note : assume the p in the article is 2
 
-    print("\t\tEpsilon factor of the approximation: %f" % (1/(sqrt(k))))
+    if not silent:
+        print("\t\tEpsilon factor of the approximation: %f" % (1/(sqrt(k))))
 
     def binaryDot(x,y):
         xb = bin(x)[2:]
@@ -99,13 +102,13 @@ def FJLT(data, k, y=None):
 
 
 # Randomly sample a subset of dimensions
-def sampleDimensions(data, k, y=None):
+def sampleDimensions(data, k, y=None, silent=False):
     n, d = data.shape
     nonzero = np.random.choice(d,k,replace=False)
     return data[:,nonzero]
 
 # Select the features with most variance
-def selectMostVarDims(data, k, y=None):
+def selectMostVarDims(data, k, y=None, silent=False):
     n, d = data.shape
     vars = data.var(axis=0)
     mostvars = vars.argsort()[-k:]
@@ -113,15 +116,15 @@ def selectMostVarDims(data, k, y=None):
 
 ### Out of the box methods ###
 
-def useLDA(data, k, y=None):
+def useLDA(data, k, y=None, silent=False):
     clf = LinearDiscriminantAnalysis(n_components=k)
     return clf.fit_transform(data, y)
 
-def usePCA(data, k, y=None):
+def usePCA(data, k, y=None, silent=False):
     pca = PCA(n_components=k)
     return pca.fit_transform(data, y)
 
-def useFactorAnalysis(data, k, y=None):
+def useFactorAnalysis(data, k, y=None, silent=False):
     fa = FactorAnalysis(n_components=k)
     return fa.fit_transform(data, y)
 
