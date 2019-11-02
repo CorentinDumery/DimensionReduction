@@ -10,7 +10,7 @@ def loadDigits():
     print("Loading sklearn's 'digit' dataset...")
 
     digits = load_digits()
-    return digits.data, digits.target
+    return digits.data, digits.target, len(np.unique(digits.target))
 
 
 # This dataset was derived by concatenating the following two files
@@ -31,7 +31,7 @@ def loadMNIST():
     data   = np.asfarray(mnist[:, 1:]) * fac + 0.01
     labels = np.asfarray(mnist[:, :1]).flatten()
 
-    return data, labels
+    return data, labels, len(np.unique(labels))
 
 def plotImgs(digits):
     for i in range(1, len(digits)):

@@ -101,4 +101,4 @@ def loadTaxis(numberOfEntries = 1000):
     scaled_data = computeScale(raw_data)
     numData = entryToNumbers(scaled_data)
 
-    return numData,None
+    return numData,None,None
