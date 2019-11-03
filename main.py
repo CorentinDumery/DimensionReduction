@@ -97,7 +97,7 @@ def main():
     print("R = %d" % (R))
 
     if CleanOutput:
-        print("n\td\tn_clust\ttest_pr\teval_against\tmethod\tk\tn/k\tvmeas\tvmeas_e\ttime")
+        print("n\td\tn_clust\ttest_pr\teval_against\tmethod\tk\tk/d\tvmeas\tvmeas_e\ttime")
         # E.g 10000	784	mshift_	baseline	Achliop	392	0.5	0.000 +/- 0.00	14.589523
 
     # For each method
