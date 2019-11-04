@@ -35,8 +35,8 @@ R = 3
 
 
 load_dataset_funs = [
-    loadDigits,
-    loadMNIST_big,
+    # loadDigits,
+    loadMNIST_tiny,
     loadGISETTE_tiny,
     loadDEXTER_tiny,
     loadDOROT_tiny,
@@ -94,27 +94,24 @@ def test_on_dataset(load_dataset_fun):
         print("n\td\tn_clust\ttest_pr\teval_against\tmethod\tk\tk/d\tvmeas\tvmeas_e\ttime")
         # E.g 10000	784	mshift_	baseline	Achliop	392	0.5	0.000 +/- 0.00	14.589523
 
-    # For each method
-    for method_fun in methods:
+    # For test problem
+    for test_problem in test_problems:
 
         if not CleanOutput:
-            print()
-            try:
-                 print(method_fun.__doc__)
-            except ValueError:
-                 print("Please select a transform method")
+            print("\tPure " + test_problem.__doc__ + "...")
 
-        # For test problem
-        for test_problem in test_problems:
+        # Obtain the labels according to the algorithm (without dim. reduction)
+        eval_against = [{'name' : "gr-truth", 'labs' : labels}]
+        if labels is None:
+            eval_against = []
+        naive_labels = evaluate(data, test_problem, n_clusters, eval_against, R=R)
+
+        # For each method
+        for method_fun in methods:
 
             if not CleanOutput:
-                print("\tPure " + test_problem.__doc__ + "...")
-
-            # Obtain the labels according to the algorithm (without dim. reduction)
-            eval_against = [{'name' : "gr-truth", 'labs' : labels}]
-            if labels is None:
-                eval_against = []
-            naive_labels = evaluate(data, test_problem, n_clusters, eval_against, R=R)
+                print()
+                print(method_fun.__doc__)
 
             # For some dim. red
             ks = np.unique((np.array(dim_red_factor)*100).astype(int).clip(1, d))
@@ -155,6 +152,9 @@ def evaluate(data, test_problem, n_clusters, base_labels_arrs, reduce_by=None, R
         method_name = method_fun.__name__
         k_name = str(k)
         kd_name = "%.5f" % (k/d)
+
+    if len(base_labels_arrs) == 0:
+        raise ValueError("Error! Cannot evaluate against nothing.")
 
     # For each labels to evaluate against
     for i,base in enumerate(base_labels_arrs):

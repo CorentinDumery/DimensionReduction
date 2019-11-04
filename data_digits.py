@@ -21,10 +21,10 @@ def loadMNIST(set):
     """
     Source: https://www.python-course.eu/neural_network_mnist.php
 
-    train : N=6000, k=10, d=784
-    valid : N=1000, k=10, d=784
+    train : N=60000, k=10, d=784
+    test  : N=10000, k=10, d=784
     -
-    all   : N=7000, k=10, d=784
+    all   : N=70000, k=10, d=784
     """
 
     print("Loading MNIST dataset...")
