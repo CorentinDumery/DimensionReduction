@@ -6,6 +6,10 @@ from random import random
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_digits
 
+loadMNIST_tiny = lambda : loadMNIST(set="test")
+loadMNIST_big  = lambda : loadMNIST(set="train")
+loadMNIST_huge = lambda : loadMNIST(set="all")
+
 def loadDigits():
     print("Loading sklearn's 'digit' dataset...")
 
@@ -13,14 +17,19 @@ def loadDigits():
     return digits.data, digits.target, len(np.unique(digits.target))
 
 
-# Source: https://www.python-course.eu/neural_network_mnist.php
-def loadMNIST():
+def loadMNIST(set):
+    """
+    Source: https://www.python-course.eu/neural_network_mnist.php
+
+    train : N=6000, k=10, d=784
+    valid : N=1000, k=10, d=784
+    -
+    all   : N=7000, k=10, d=784
+    """
+
     print("Loading MNIST dataset...")
 
-    # Choose depending on the size
-    mnist = np.loadtxt("data/mnist/mnist_test.csv", delimiter=",")     # 18MB
-    # mnist = np.loadtxt("data/mnist/mnist_train.csv", delimiter=",")  # 109MB
-    # mnist = np.loadtxt("data/mnist/mnist_all.csv", delimiter=",")    # 127MB
+    mnist = np.loadtxt("data/mnist/mnist_%s.csv" % (set), delimiter=",")
 
     # Normalize values
     fac = 0.99 / 255

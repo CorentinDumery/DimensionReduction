@@ -33,11 +33,23 @@ CleanOutput = True
 # Number of repeated runs
 R = 3
 
+
+load_dataset_funs = [
+    loadDigits,
+    loadMNIST_big,
+    loadGISETTE_tiny,
+    loadDEXTER_tiny,
+    loadDOROT_tiny,
+    loadHighD_128,
+    loadHighD_256,
+    loadHighD_512,
+    loadHighD_1024]
+# load_dataset_fun = loadDigits
+# load_dataset_fun = loadMNIST
 # load_dataset_fun = loadGISETTE
 # load_dataset_fun = loadDEXTER
 # load_dataset_fun = loadDOROT
-# load_dataset_fun = loadDigits
-# load_dataset_fun = loadMNIST
+
 # load_dataset_fun = loadHighD_1024
 
 # Methods used for dimensionality reduction
@@ -64,18 +76,12 @@ def main():
     print("###################################################")
     print()
 
+    for load_dataset_fun in load_dataset_funs:
+        test_on_dataset(load_dataset_fun)
+
+def test_on_dataset(load_dataset_fun):
+
     np.random.seed(0)
-
-    methods_names = {
-        "Achliop"     : "Achlioptas' coin flip method",
-        "FastJLT"     : "Fast Johnson-Lindenstrauss Transform method",
-        "sampDim"     : "Simple dimensions sampling",
-        "HVarDim"     : "Select high-variance dimensions",
-        "useLDA"      : "LDA",
-        "usePCA"      : "PCA",
-        "FactAna"     : "FactorAnalysis",
-    }
-
 
     data, labels, n_clusters = load_dataset_fun()
     n, d = data.shape
@@ -94,7 +100,7 @@ def main():
         if not CleanOutput:
             print()
             try:
-                 print(methods_names[method_fun.__name__])
+                 print(method_fun.__doc__)
             except ValueError:
                  print("Please select a transform method")
 

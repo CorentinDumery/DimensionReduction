@@ -15,6 +15,7 @@ from sklearn.decomposition import PCA, FactorAnalysis
 # question 2 if I remember correctly we don't need to prove stuff
 
 def Achliop(data, k, y=None, silent=False):
+    """Achlioptas' coin flip method"""
     n, d = data.shape
 
     # Estimation of the transform's "accuracy":
@@ -65,6 +66,7 @@ def Achliop(data, k, y=None, silent=False):
 # Fast Johnson-Lindenstrauss Transform
 
 def FastJLT(data, k, y=None, silent=False):
+    """Fast Johnson-Lindenstrauss Transform method"""
     n, d = data.shape
     # Note : assume the p in the article is 2
 
@@ -107,12 +109,14 @@ def FastJLT(data, k, y=None, silent=False):
 
 # Randomly sample a subset of dimensions
 def sampDim(data, k, y=None, silent=False):
+    """Simple dimensions sampling"""
     n, d = data.shape
     nonzero = np.random.choice(d,k,replace=False)
     return data[:,nonzero], ""
 
 # Select the features with most variance
 def HVarDim(data, k, y=None, silent=False):
+    """Select high-variance dimensions"""
     n, d = data.shape
     vars = data.var(axis=0)
     mostvars = vars.argsort()[-k:]
@@ -121,14 +125,17 @@ def HVarDim(data, k, y=None, silent=False):
 ### Out of the box methods ###
 
 def useLDA(data, k, y=None, silent=False):
+    """LDA"""
     clf = LinearDiscriminantAnalysis(n_components=k)
     return clf.fit_transform(data, y), ""
 
 def usePCA(data, k, y=None, silent=False):
+    """PCA"""
     pca = PCA(n_components=k)
     return pca.fit_transform(data, y), ""
 
 def FactAna(data, k, y=None, silent=False):
+    """FactorAnalysis"""
     fa = FactorAnalysis(n_components=k)
     return fa.fit_transform(data, y), ""
 
