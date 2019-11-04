@@ -8,15 +8,19 @@ from scipy.spatial.distance import cdist
 def kmeans_(data, n_clusters, y):
     """K-means"""
     kmeans = KMeans(
-        n_clusters=n_clusters
-        # , random_state=4
+        n_clusters=n_clusters,
+        # , random_state=4,
+        n_jobs=-1,
         ).fit(data)
     return kmeans.labels_
 
 def kneigh_(data, n_clusters, y):
     """KNN"""
     k=max(10, int(data.shape[0]/n_clusters/3))
-    neigh = KNeighborsClassifier(n_neighbors=k)
+    neigh = KNeighborsClassifier(
+        n_neighbors=k,
+        n_jobs=-1,
+        )
     neigh.fit(data, y)
     return neigh.predict(data)
 
@@ -26,6 +30,7 @@ def spectr_(data, n_clusters, y):
     sc = SpectralClustering(
         n_clusters=n_clusters,
         assign_labels="discretize",
+        n_jobs=-1,
         ).fit(data)
     return sc.labels_
 
