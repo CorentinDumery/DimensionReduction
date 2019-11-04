@@ -28,6 +28,7 @@ def Achliop(data, k, y=None, silent=False):
         if (objective>0.1666):
             if not silent:
                 print("\t\tWarning : output's dimension is too low, the proof doesn't hold.")
+            return str('/')
         else:
             precision = 0.001
             while True:
@@ -42,8 +43,9 @@ def Achliop(data, k, y=None, silent=False):
             eps = x
             if not silent:
                 print("\t\tEpsilon factor of the approximation: %f" % (eps))
+            return str(eps)
 
-    estEpsilon(k,n)
+    str_eps = estEpsilon(k,n)
 
     # Core routine
     phi = np.random.rand(k,d)
@@ -58,7 +60,7 @@ def Achliop(data, k, y=None, silent=False):
             else:
                 phi[i,j] = 0
 
-    return 1/sqrt(k) * data.dot(phi.T)
+    return 1/sqrt(k) * data.dot(phi.T), str_eps
 
 # Fast Johnson-Lindenstrauss Transform
 
@@ -66,8 +68,10 @@ def FastJLT(data, k, y=None, silent=False):
     n, d = data.shape
     # Note : assume the p in the article is 2
 
+    eps = 1/(sqrt(k))
+
     if not silent:
-        print("\t\tEpsilon factor of the approximation: %f" % (1/(sqrt(k))))
+        print("\t\tEpsilon factor of the approximation: %f" % (eps))
 
     def binaryDot(x,y):
         xb = bin(x)[2:]
@@ -96,7 +100,7 @@ def FastJLT(data, k, y=None, silent=False):
             D[i][i] = -1
 
     phi = P.dot(H.dot(D))
-    return data.dot(phi.T)
+    return data.dot(phi.T), str(eps)
 
 ### --- End of FJLT --- ###
 
@@ -105,28 +109,28 @@ def FastJLT(data, k, y=None, silent=False):
 def sampDim(data, k, y=None, silent=False):
     n, d = data.shape
     nonzero = np.random.choice(d,k,replace=False)
-    return data[:,nonzero]
+    return data[:,nonzero], ""
 
 # Select the features with most variance
 def HVarDim(data, k, y=None, silent=False):
     n, d = data.shape
     vars = data.var(axis=0)
     mostvars = vars.argsort()[-k:]
-    return data[:,mostvars]
+    return data[:,mostvars], ""
 
 ### Out of the box methods ###
 
 def useLDA(data, k, y=None, silent=False):
     clf = LinearDiscriminantAnalysis(n_components=k)
-    return clf.fit_transform(data, y)
+    return clf.fit_transform(data, y), ""
 
 def usePCA(data, k, y=None, silent=False):
     pca = PCA(n_components=k)
-    return pca.fit_transform(data, y)
+    return pca.fit_transform(data, y), ""
 
 def FactAna(data, k, y=None, silent=False):
     fa = FactorAnalysis(n_components=k)
-    return fa.fit_transform(data, y)
+    return fa.fit_transform(data, y), ""
 
 
 ### --- End --- ###

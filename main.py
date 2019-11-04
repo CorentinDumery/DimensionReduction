@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
 
-## Note : the current file reading is sequential, need to find how to directly
-##  access row i
-## GIO: what do you mean? is it about NIST? is it about the fact that digits is a "bunch" and not a numpy array?
-
-## TODO : find better dataset ( https://leon.bottou.org/projects/infimnist )
-
 from math import log,sqrt
 import numpy as np
 from random import random
@@ -21,6 +15,7 @@ from test_problems import *
 from data_digits   import *
 from data_highd    import *
 from data_taxis    import *
+from data_real     import *
 
 import warnings
 def warn(*args, **kwargs):
@@ -30,40 +25,33 @@ def warn(*args, **kwargs):
 #########################################################################
 #########################################################################
 
+# One might not want to eval against the ground truth (baseline is often enough)
+DontEvalAgainstGT = False
+
 CleanOutput = True
+
 # Number of repeated runs
 R = 3
 
-load_dataset_fun = loadDigits
+# load_dataset_fun = loadGISETTE
+# load_dataset_fun = loadDEXTER
+# load_dataset_fun = loadDOROT
+# load_dataset_fun = loadDigits
 # load_dataset_fun = loadMNIST
 # load_dataset_fun = loadHighD_1024
 
-# TODO: real-world datasets
-# load_dataset_fun = loadTaxis
-#  http://archive.ics.uci.edu/ml/datasets/Gisette
-#  http://archive.ics.uci.edu/ml/datasets/Dorothea
-#  http://archive.ics.uci.edu/ml/datasets/Dexter
-
+# Methods used for dimensionality reduction
 methods = [Achliop, FastJLT, sampDim, HVarDim, useLDA, usePCA, FactAna]
 # methods = [Achliop, FastJLT, sampDim]
 
-# One might not want to eval against the ground truth
-#  because the results against the baseline are sufficient (and very similar)
-DontEvalAgainstGT = True
-
-test_problems = [kneigh_, kmeans_] # spectr_
+test_problems = [kneigh_, kmeans_]
 # test_problems = [kmeans_]
-# test_problems = [mshift_]
 
-# dim_red_factor = [0.5, 0.2, 0.1, 0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]
-dim_red_factor = [0.5, 0.2, 0.1, 0.01, 0.001, 0.0001]
+dim_red_factor = [0.5, 0.2, 0.1, 0.05, 0.01, 0.005, 0.001, 0.0005, 0.0001]
+# dim_red_factor = [0.5, 0.2, 0.1, 0.01, 0.001, 0.0001]
 
 #########################################################################
 #########################################################################
-
-##########################################################
-####################### ENTRY POINT ######################
-##########################################################
 
 # This script compares the performance of dimensionality reduction
 #  by means of JLT transforms methods over some available datasets
@@ -116,6 +104,7 @@ def main():
             if not CleanOutput:
                 print("\tPure " + test_problem.__doc__ + "...")
 
+            # Obtain the labels according to the algorithm (without dim. reduction)
             eval_against = [{'name' : "gr-truth", 'labs' : labels}]
             if labels is None:
                 eval_against = []
@@ -135,6 +124,7 @@ def main():
                     print("\t\tDim. reduction: %d -> %d" % (d, k))
 
 
+                # Obtain the labels according to the algorithm with dim. reduction
                 eval_against = [{'name' : "gr-truth", 'labs' : labels}, {'name' : "baseline", 'labs' : naive_labels}]
                 if labels is None or DontEvalAgainstGT:
                     eval_against = [{'name' : "baseline", 'labs' : naive_labels}]
@@ -173,19 +163,20 @@ def evaluate(data, test_problem, n_clusters, base_labels_arrs, reduce_by=None, R
         for r in range(R):
 
             if reduce_by != None:
-                reduced_data = method_fun(data, k, labels, silent=CleanOutput)
+                reduced_data, str_note = method_fun(data, k, labels, silent=CleanOutput)
                 if reduced_data.shape[1] != k:
                     print(data.shape, reduced_data.shape)
                     raise ValueError("Error! reduction failed:")
             else:
                 reduced_data = data
+                str_note = ''
 
             time_elapsed_avg -= time.time()
             clust = test_problem(reduced_data, n_clusters, labels)
             time_elapsed_avg += time.time()
 
             if len(np.unique(clust)) != n_clusters:
-                print("Error! Check the code. The clustering routine only used %d of the %d available cluster(s)." % (len(np.unique(clust)), n_clusters))
+                print("Error! Check the code. The clustering routine used %d of the %d available cluster(s)." % (len(np.unique(clust)), n_clusters))
 
             v_measure = metrics.v_measure_score(labels, clust)
             v_measure_avg += v_measure
@@ -200,7 +191,7 @@ def evaluate(data, test_problem, n_clusters, base_labels_arrs, reduce_by=None, R
             print("\t\tv-measure/%s:\t%0.3f +/- %0.2f" % (base['name'], v_measure_avg, (v_measure_max-v_measure_min)/2/v_measure_avg))
             print("\t\tAvg. time: %f secs." % (time_elapsed_avg))
         else:
-            print("%d\t%d\t%d\t%s\t%s\t%s\t%s\t%s\t%0.3f\t%0.2f\t%f" % (
+            print("%d\t%d\t%d\t%s\t%s\t%s\t%s\t%s\t%0.3f\t%0.2f\t%f\t%s" % (
                 n,
                 d,
                 n_clusters,
@@ -212,8 +203,8 @@ def evaluate(data, test_problem, n_clusters, base_labels_arrs, reduce_by=None, R
                 v_measure_avg,
                 ((v_measure_max-v_measure_min)/2/v_measure_avg),
                 time_elapsed_avg,
+                str_note,
                 ))
-
 
     return clust
 

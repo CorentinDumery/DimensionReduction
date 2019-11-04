@@ -13,6 +13,14 @@ def kmeans_(data, n_clusters, y):
         ).fit(data)
     return kmeans.labels_
 
+def kneigh_(data, n_clusters, y):
+    """KNN"""
+    k=max(10, int(data.shape[0]/n_clusters/3))
+    neigh = KNeighborsClassifier(n_neighbors=k)
+    neigh.fit(data, y)
+    return neigh.predict(data)
+
+
 def spectr_(data, n_clusters, y):
     """Spectral Clustering"""
     sc = SpectralClustering(
@@ -21,12 +29,7 @@ def spectr_(data, n_clusters, y):
         ).fit(data)
     return sc.labels_
 
-def kneigh_(data, n_clusters, y):
-    """KNN"""
-    k=max(10, int(data.shape[0]/n_clusters/2))
-    neigh = KNeighborsClassifier(n_neighbors=k)
-    neigh.fit(data, y)
-    return neigh.predict(data)
+
 
 def mshift_(data, n_clusters, y):
     """MeanShift"""
