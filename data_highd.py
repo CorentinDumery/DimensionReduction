@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from sklearn.neighbors import NearestNeighbors
 
 loadHighD_32   = lambda : loadHighD(32)
 loadHighD_64   = lambda : loadHighD(64)
@@ -32,6 +33,7 @@ P. Fränti, O. Virmajoki and V. Hautamäki, "Fast agglomerative clustering using
     print("Loading highd (d=%d) dataset..." % d)
 
     data   = pd.read_csv("data/highd/dim%03d.txt" % d, header=None, sep='\s+').to_numpy()
-    labels = pd.read_csv("data/highd/gt/dim%03d.txt" % d, header=None, sep='\s+').to_numpy()
-    #Note that labels are not the actual labels for this datasets (only useful for finding the right number of clusters)
-    return data, None, labels.shape[0]
+    centers = pd.read_csv("data/highd/gt/dim%03d.txt" % d, header=None, sep='\s+').to_numpy()
+    neigh  = NearestNeighbors(1).fit(centers)
+    labels = neigh.kneighbors(data, return_distance=False).flatten()
+    return data, labels, centers.shape[0]

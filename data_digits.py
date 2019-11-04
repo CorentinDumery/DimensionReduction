@@ -13,20 +13,16 @@ def loadDigits():
     return digits.data, digits.target, len(np.unique(digits.target))
 
 
-# This dataset was derived by concatenating the following two files
-# - https://www.python-course.eu/data/mnist/mnist_train.csv
-# - https://www.python-course.eu/data/mnist/mnist_test.csv
-# into data/mnist.csv
 # Source: https://www.python-course.eu/neural_network_mnist.php
-
 def loadMNIST():
     print("Loading MNIST dataset...")
 
-    # Any of these will work, choose depending on the size you want
+    # Choose depending on the size
     mnist = np.loadtxt("data/mnist/mnist_test.csv", delimiter=",")     # 18MB
     # mnist = np.loadtxt("data/mnist/mnist_train.csv", delimiter=",")  # 109MB
-    # mnist = np.loadtxt("data/mnist.csv", delimiter=",")              # 127MB
+    # mnist = np.loadtxt("data/mnist/mnist_all.csv", delimiter=",")    # 127MB
 
+    # Normalize values
     fac = 0.99 / 255
     data   = np.asfarray(mnist[:, 1:]) * fac + 0.01
     labels = np.asfarray(mnist[:, :1]).flatten()

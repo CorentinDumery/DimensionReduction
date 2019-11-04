@@ -30,6 +30,6 @@ implications of what you have done.)
 4. Conclusion: State any conclusions, and describe any hypotheses/conjectures that have arisen
 from your analysis/experiments. Give a few interesting questions that have come up during
 your exploration. Describe some possible further applications of these techniques.
-The nal report should be completely self-contained and easy to read. Each section should read
+The final report should be completely self-contained and easy to read. Each section should read
 as a well-written stand-alone section, beginning with an introductory paragraph and continuing
 with a sequential development of subsections. Good writing is encouraged throughout.
