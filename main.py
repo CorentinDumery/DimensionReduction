@@ -36,21 +36,14 @@ R = 3
 
 load_dataset_funs = [
     # loadDigits,
-    loadMNIST_tiny,
-    loadGISETTE_tiny,
-    loadDEXTER_tiny,
-    loadDOROT_tiny,
+    # loadMNIST_tiny,
+    # loadGISETTE_tiny,
+    # TODO FIX loadDEXTER_tiny,
+    # TODO FIX loadDOROT_tiny,
     loadHighD_128,
     loadHighD_256,
     loadHighD_512,
     loadHighD_1024]
-# load_dataset_fun = loadDigits
-# load_dataset_fun = loadMNIST
-# load_dataset_fun = loadGISETTE
-# load_dataset_fun = loadDEXTER
-# load_dataset_fun = loadDOROT
-
-# load_dataset_fun = loadHighD_1024
 
 # Methods used for dimensionality reduction
 methods = [Achliop, FastJLT, sampDim, HVarDim, useLDA, usePCA, FactAna]
