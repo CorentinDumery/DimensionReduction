@@ -1,0 +1,181 @@
+Loading GISETTE dataset...
+n * d = 7000 * 5000
+n_clusters = 2
+R = 5
+n	d	n_clust	test_pr	eval_against	methodid	methodname	k	k/d	vmeas	vm_min	vm_max	t_red	tred_min	tred_max	t_test	t_est_min	_esd_max	t_tot	ttot_min	ttod_max	eps
+7000	5000	2	kmeans_	gr-truth	0	Baseline	5000	1.00000	0.122	0.001	0.001	0.00000	-inf	0.00000	43.44994	11.16608	14.45823	43.44994	-inf	14.45823
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	2500	0.50000	0.119	0.015	0.012	13.69252	2.67421	1.72491	10.90703	2.48862	2.98279	24.59955	5.16283	4.70770	0.1875
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	1000	0.20000	0.105	0.021	0.017	5.02569	1.00804	2.57567	3.29374	0.36088	0.25479	8.31943	1.36892	2.83046	0.3046875
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	500	0.10000	0.125	0.008	0.010	2.27435	0.07272	0.06318	1.97098	0.40249	0.34108	4.24533	0.47520	0.40427	0.46875
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	250	0.05000	0.104	0.041	0.031	1.36051	0.01967	0.03298	1.03119	0.13492	0.24016	2.39170	0.15459	0.27314	0.8125
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	50	0.01000	0.096	0.042	0.066	1.12361	0.56286	0.97987	0.49648	0.07254	0.07221	1.62009	0.63541	1.05207	/
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	25	0.00500	0.052	0.043	0.106	0.51324	0.03378	0.03524	0.41887	0.05270	0.03777	0.93210	0.08648	0.07300	/
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	5	0.00100	0.012	0.010	0.017	0.45494	0.10135	0.05197	0.35414	0.05105	0.02887	0.80908	0.15240	0.08084	/
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	2	0.00040	0.016	0.016	0.017	0.72525	0.25480	0.21414	0.32998	0.02456	0.03550	1.05523	0.27936	0.24963	/
+7000	5000	2	kmeans_	gr-truth	3	Coin flip	1	0.00020	0.008	0.006	0.008	0.34353	0.08483	0.20955	0.10483	0.02244	0.02899	0.44836	0.10727	0.23854	/
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	2500	0.50000	0.128	0.011	0.007	5.12220	1.44221	3.88511	8.92248	0.64404	0.46446	14.04468	2.08624	4.34957	0.020
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	1000	0.20000	0.113	0.022	0.017	5.87975	1.55600	1.75735	3.30199	0.41048	1.10394	9.18173	1.96648	2.86130	0.032
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	500	0.10000	0.121	0.061	0.048	5.28966	1.28405	2.50741	1.72489	0.37161	0.50497	7.01455	1.65566	3.01239	0.045
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	250	0.05000	0.125	0.037	0.031	4.06892	0.42269	0.76078	0.82456	0.07750	0.06907	4.89347	0.50019	0.82984	0.063
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	50	0.01000	0.086	0.059	0.064	4.00338	0.30280	0.20178	0.40049	0.06194	0.10163	4.40386	0.36474	0.30340	0.141
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	25	0.00500	0.027	0.026	0.023	3.84331	0.26489	0.29604	0.36003	0.10379	0.14036	4.20334	0.36868	0.43639	0.200
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	5	0.00100	0.022	0.019	0.064	3.76517	0.22308	0.38867	0.25811	0.05977	0.09425	4.02329	0.28285	0.48292	0.447
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	2	0.00040	0.013	0.013	0.016	3.95516	0.57443	0.41132	0.21668	0.02528	0.04352	4.17184	0.59970	0.45485	0.707
+7000	5000	2	kmeans_	gr-truth	4	Fast JL Transform	1	0.00020	0.006	0.006	0.017	4.49892	1.25238	1.93130	0.04131	0.01599	0.02900	4.54023	1.26837	1.96030	1.000
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	2500	0.50000	0.117	0.032	0.031	1.13792	0.73321	0.76265	8.98398	1.43245	3.08066	10.12189	2.16565	3.84331
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	1000	0.20000	0.119	0.044	0.050	0.18377	0.14686	0.55166	3.10912	0.72921	0.65154	3.29289	0.87607	1.20320
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	500	0.10000	0.088	0.084	0.103	0.01736	0.00647	0.00584	1.65611	0.18891	0.17416	1.67347	0.19539	0.17999
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	250	0.05000	0.114	0.065	0.057	0.03818	0.03213	0.12289	0.94918	0.18852	0.18160	0.98736	0.22065	0.30448
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	50	0.01000	0.005	0.005	0.007	0.00830	0.00753	0.02809	0.45973	0.06117	0.08153	0.46803	0.06870	0.10962
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	25	0.00500	0.007	0.007	0.018	0.00193	0.00123	0.00433	0.33353	0.04196	0.04594	0.33546	0.04319	0.05027
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	5	0.00100	0.002	0.002	0.008	0.00184	0.00134	0.00517	0.30501	0.05520	0.08390	0.30686	0.05654	0.08907
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	2	0.00040	0.001	0.001	0.002	0.00131	0.00083	0.00328	0.26803	0.04329	0.08719	0.26934	0.04412	0.09047
+7000	5000	2	kmeans_	gr-truth	2	Sample dimensions	1	0.00020	0.002	0.002	0.007	0.00033	0.00004	0.00015	0.04581	0.02405	0.08963	0.04614	0.02409	0.08977
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	2500	0.50000	0.009	0.000	0.000	1.01963	0.69352	1.70721	9.20160	2.27014	2.86393	10.22123	2.96366	4.57113
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	1000	0.20000	0.003	0.000	0.000	0.91595	0.58449	2.15701	2.59754	0.47524	1.17359	3.51349	1.05973	3.33060
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	500	0.10000	0.002	0.000	0.000	0.32423	0.01299	0.02092	1.12525	0.03919	0.04286	1.44948	0.05218	0.06379
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	250	0.05000	0.001	0.000	0.000	0.36173	0.04430	0.09060	0.64649	0.02360	0.04884	1.00822	0.06791	0.13945
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	50	0.01000	0.000	0.000	0.000	0.37631	0.02665	0.02731	0.22829	0.01569	0.03529	0.60460	0.04234	0.06260
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	25	0.00500	-0.000	0.000	0.000	0.33604	0.02919	0.07607	1.13690	0.03793	0.05153	1.47295	0.06713	0.12760
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	5	0.00100	-0.000	0.000	0.000	0.32011	0.00787	0.01344	0.95346	0.08311	0.12093	1.27356	0.09098	0.13437
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	2	0.00040	-0.000	0.000	0.000	0.33612	0.02626	0.05068	0.91578	0.05811	0.04877	1.25190	0.08437	0.09945
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+/home/gio/DimensionReduction/JLT_methods.py:134: RuntimeWarning: invalid value encountered in true_divide
+  disp = data.var(axis=0)/data.mean(axis=0)
+/usr/lib/python3.7/site-packages/sklearn/cluster/k_means_.py:972: ConvergenceWarning: Number of distinct clusters (1) found smaller than n_clusters (2). Possibly due to duplicate points in X.
+  return_n_iter=True)
+7000	5000	2	kmeans_	gr-truth	1	Highest dispersion	1	0.00020	-0.000	0.000	0.000	0.37664	0.07306	0.14288	0.54988	0.03700	0.03713	0.92653	0.11007	0.18001
+7000	5000	2	kmeans_	gr-truth	5	PCA	2500	0.50000	0.122	0.000	0.001	94.81743	4.82551	4.43267	11.86075	3.82670	3.35817	106.67817	8.65222	7.79084
+7000	5000	2	kmeans_	gr-truth	5	PCA	1000	0.20000	0.122	0.001	0.001	24.64914	3.59387	4.28905	3.44584	0.77964	1.77959	28.09498	4.37350	6.06864
+7000	5000	2	kmeans_	gr-truth	5	PCA	500	0.10000	0.122	0.001	0.002	9.69485	0.57978	0.81621	1.39373	0.07313	0.07539	11.08858	0.65290	0.89160
+7000	5000	2	kmeans_	gr-truth	5	PCA	250	0.05000	0.122	0.001	0.001	9.16357	0.69988	1.53017	0.89266	0.04371	0.08814	10.05623	0.74359	1.61831
+7000	5000	2	kmeans_	gr-truth	5	PCA	50	0.01000	0.122	0.000	0.000	3.34253	0.29338	0.55709	0.42064	0.04885	0.02798	3.76316	0.34223	0.58508
+7000	5000	2	kmeans_	gr-truth	5	PCA	25	0.00500	0.123	0.001	0.002	3.06077	0.17848	0.20180	0.33367	0.06023	0.08700	3.39444	0.23871	0.28880
+7000	5000	2	kmeans_	gr-truth	5	PCA	5	0.00100	0.119	0.001	0.001	3.02710	0.20233	0.38430	0.28976	0.04282	0.05061	3.31686	0.24515	0.43491
+7000	5000	2	kmeans_	gr-truth	5	PCA	2	0.00040	0.108	0.000	0.000	3.01498	0.35772	0.27837	0.26879	0.04742	0.10184	3.28377	0.40513	0.38021
+7000	5000	2	kmeans_	gr-truth	5	PCA	1	0.00020	0.106	0.000	0.000	3.09082	0.38916	0.45907	0.03401	0.00277	0.00446	3.12483	0.39193	0.46354

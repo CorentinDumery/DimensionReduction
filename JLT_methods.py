@@ -4,11 +4,10 @@ from math import log,sqrt
 import numpy as np
 from random import random
 import time
+from michaelmathenFJLT import *
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.decomposition import PCA, FactorAnalysis
-
-### --- FJLT --- ###
 
 # Note : in the article they only prove their JLT works for k > k0 > 25 so it's
 # kinda useless, but I guess we can still use it as a comparison for low k, in
@@ -64,10 +63,25 @@ def Achliop(data, k, y=None, silent=False):
     return 1/sqrt(k) * data.dot(phi.T), str_eps
 
 # Fast Johnson-Lindenstrauss Transform
-
 def FastJLT(data, k, y=None, silent=False):
     """Fast Johnson-Lindenstrauss Transform method"""
     n, d = data.shape
+    eps = 1/(sqrt(k))
+    # fjlt(data, k)
+    return fjlt_usp(data, k), ("%0.3f" % (eps))
+
+# Fast Johnson-Lindenstrauss Transform
+def FastJLT2(data, k, y=None, silent=False):
+    """Fast Johnson-Lindenstrauss Transform method"""
+    n, d = data.shape
+    eps = 1/(sqrt(k))
+    q = min(1,(log(n)**2)/d)
+    # fjlt(data, k)
+    return fjlt(data, k, q), ("%0.3f" % (eps))
+
+def FastJLT3(data, k, y=None, silent=False):
+    """Fast Johnson-Lindenstrauss Transform method"""
+    d, n = data.shape
     # Note : assume the p in the article is 2
 
     eps = 1/(sqrt(k))
@@ -85,27 +99,26 @@ def FastJLT(data, k, y=None, silent=False):
         return res % 2
 
     q = min(1,(log(n)**2)/d)
-    P = np.zeros((k,d))
-    for i in range(k):
-        for j in range(d):
-            if random() < q:
-                P[i][j] = np.random.normal(0,1/q)
     H = np.zeros((d,d))
     D = np.zeros((d,d))
     for i in range(d):
         for j in range(d):
             H[i][j] = pow(d,-1/2)*pow(-1,binaryDot(i-1,j-1))
 
-        if random() > 1/2:
+    for i in range(d):
+        if random() > .5:
             D[i][i] =  1
         else:
             D[i][i] = -1
 
+    sample_size = npr.binomial(k * d, q)
+    indc = fast_sample(k * d, sample_size)
+    p_rows, p_cols = np.unravel_index(indc, (k, d))
+    p_data = npr.normal(loc=0, scale=math.sqrt(1/q), size=len(p_rows))
+    P = sparse.csr_matrix((p_data, (p_rows, p_cols)), shape=(k, d))
+
     phi = P.dot(H.dot(D))
-    return data.dot(phi.T), str(eps)
-
-### --- End of FJLT --- ###
-
+    return phi.dot(data), ("%0.3f" % (eps))
 
 # Randomly sample a subset of dimensions
 def sampDim(data, k, y=None, silent=False):
@@ -118,9 +131,9 @@ def sampDim(data, k, y=None, silent=False):
 def HVarDim(data, k, y=None, silent=False):
     """Select high-variance dimensions"""
     n, d = data.shape
-    vars = data.var(axis=0)
-    mostvars = vars.argsort()[-k:]
-    return data[:,mostvars], ""
+    disp = data.var(axis=0)/data.mean(axis=0)
+    mostdisp = disp.argsort()[-k:]
+    return data[:,mostdisp], ""
 
 ### Out of the box methods ###
 

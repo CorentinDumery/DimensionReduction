@@ -4,22 +4,27 @@
 set -x
 for i in *.out; do
 
-  grep -e "gr-truth$(printf '\t')-" $i | sed 's/\([0-9]\+\t\([0-9]\+\)\t[0-9]\+\t\w\+\tgr-truth\t\)-\t-\t-\t\([0-9\.]\+\t[0-9\.]\+\t[0-9\.]\+\)/\1Base\t\2\t1.00\t\3\t\\/g' > $i.posttmp2
+  grep -e "gr-truth$(printf "\t")0" $i > $i.posttmp2
 
-  grep -e "baseline" $i > $i.posttmp
-  { grep -e "sampDim" $i.posttmp  | sed "s/$/\//" &&
-    grep -e "HVarDim" $i.posttmp  | sed "s/$/\//" &&
-    grep -e "Achliop" $i.posttmp &&
-    grep -e "FastJLT" $i.posttmp; } >> $i.posttmp2
+  #grep -e "baseline" $i > $i.posttmp
+  grep -e "gr-truth" $i > $i.posttmp
 
-  { grep -e "n$(printf '\t')d" $i | sed "s/$/\teps/" &&
+  { grep -e "Sample dimensions" $i.posttmp  | sed "s/$/\t\//" &&
+    grep -e "Highest dispersion" $i.posttmp  | sed "s/$/\t\//" &&
+    grep -e "PCA"  $i.posttmp  | sed "s/$/\t\//" &&
+    grep -e "Factor Analysis" $i.posttmp  | sed "s/$/\t\//" &&
+    grep -e "Coin flip" $i.posttmp &&
+    grep -e "Fast JL Transform" $i.posttmp; } >> $i.posttmp2
+
+  { grep -e "n$(printf '\t')d" $i &&
     cat $i.posttmp2; } > $i.posttmp3
   ./postprocess-helper.py $i.posttmp3 > $i.posttmp;
   # ./postprocess-helper.py $i.posttmp3; exit 0
-  { echo "n,d,n_clust,test_pr,eval_against,method,methodname,k,k/d,vmeas,vmeas_e1,time,eps" &&  grep "kmeans_" $i.posttmp; } > $i-kmeans.csv
-  { echo "n,d,n_clust,test_pr,eval_against,method,methodname,k,k/d,vmeas,vmeas_e1,time,eps" &&  grep "kneigh_" $i.posttmp; } > $i-kneigh.csv
 
-  rm $i.posttmp $i.posttmp2 $i.posttmp3
+  { echo "n,d,n_clust,test_pr,eval_against,method,methodname,k,k/d,vmeas,vm_min,vm_max,t_red,tred_min,tred_max,t_test,ttest_min,ttest_max,t_tot,ttot_min,ttot_max,eps" &&  grep "kmeans_" $i.posttmp; } > $i-kmeans.csv
+  { echo "n,d,n_clust,test_pr,eval_against,method,methodname,k,k/d,vmeas,vm_min,vm_max,t_red,tred_min,tred_max,t_test,ttest_min,ttest_max,t_tot,ttot_min,ttot_max,eps" &&  grep "kneigh_" $i.posttmp; } > $i-kneigh.csv
+
+  # rm $i.posttmp $i.posttmp2 $i.posttmp3
 done
 
 exit 0;

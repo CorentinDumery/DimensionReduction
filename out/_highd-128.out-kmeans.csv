@@ -1,0 +1,32 @@
+n,d,n_clust,test_pr,eval_against,method,methodname,k,k/d,vmeas,vmeas_e1,time,eps
+1024,128,16,kmeans_,gr-truth,0,Baseline,128,1.0,1.0,0.0,1.016542,\
+1024,128,16,kmeans_,baseline,2,Sample dimensions,50,0.39062,1.0,0.0,0.331623/,nan
+1024,128,16,kmeans_,baseline,2,Sample dimensions,20,0.15625,1.0,0.0,0.289236/,nan
+1024,128,16,kmeans_,baseline,2,Sample dimensions,10,0.07812,1.0,0.0,0.324764/,nan
+1024,128,16,kmeans_,baseline,2,Sample dimensions,5,0.03906,1.0,0.0,0.039586/,nan
+1024,128,16,kmeans_,baseline,2,Sample dimensions,1,0.00781,0.887,0.017740000000000002,0.038020/,nan
+1024,128,16,kmeans_,baseline,1,Highest-variance,50,0.39062,1.0,0.0,0.271999/,nan
+1024,128,16,kmeans_,baseline,1,Highest-variance,20,0.15625,1.0,0.0,0.280017/,nan
+1024,128,16,kmeans_,baseline,1,Highest-variance,10,0.07812,1.0,0.0,0.252535/,nan
+1024,128,16,kmeans_,baseline,1,Highest-variance,5,0.03906,1.0,0.0,0.041685/,nan
+1024,128,16,kmeans_,baseline,1,Highest-variance,1,0.00781,0.922,0.0,0.041520/,nan
+1024,128,16,kmeans_,baseline,5,PCA,50,0.39062,1.0,0.0,0.323119/,nan
+1024,128,16,kmeans_,baseline,5,PCA,20,0.15625,1.0,0.0,0.308908/,nan
+1024,128,16,kmeans_,baseline,5,PCA,10,0.07812,1.0,0.0,0.345001/,nan
+1024,128,16,kmeans_,baseline,5,PCA,5,0.03906,1.0,0.0,0.121233/,nan
+1024,128,16,kmeans_,baseline,5,PCA,1,0.00781,0.958,0.00958,0.128058/,nan
+1024,128,16,kmeans_,baseline,6,Factor Analysis,50,0.39062,0.975,0.00975,0.357560/,nan
+1024,128,16,kmeans_,baseline,6,Factor Analysis,20,0.15625,1.0,0.0,0.268786/,nan
+1024,128,16,kmeans_,baseline,6,Factor Analysis,10,0.07812,1.0,0.0,0.271726/,nan
+1024,128,16,kmeans_,baseline,6,Factor Analysis,5,0.03906,1.0,0.0,0.129840/,nan
+1024,128,16,kmeans_,baseline,6,Factor Analysis,1,0.00781,0.937,0.0,0.111276/,nan
+1024,128,16,kmeans_,baseline,3,Coin flip,50,0.39062,1.0,0.0,0.332615,/
+1024,128,16,kmeans_,baseline,3,Coin flip,20,0.15625,1.0,0.0,0.293145,/
+1024,128,16,kmeans_,baseline,3,Coin flip,10,0.07812,1.0,0.0,0.322612,/
+1024,128,16,kmeans_,baseline,3,Coin flip,5,0.03906,1.0,0.0,0.103615,/
+1024,128,16,kmeans_,baseline,3,Coin flip,1,0.00781,0.912,0.018240000000000003,0.125997,/
+1024,128,16,kmeans_,baseline,4,Fast JL Transform,50,0.39062,0.919,0.00919,0.340327,0.1414213562373095
+1024,128,16,kmeans_,baseline,4,Fast JL Transform,20,0.15625,0.866,0.03464,0.280959,0.22360679774997896
+1024,128,16,kmeans_,baseline,4,Fast JL Transform,10,0.07812,0.8740000000000001,0.034960000000000005,0.270106,0.31622776601683794
+1024,128,16,kmeans_,baseline,4,Fast JL Transform,5,0.03906,0.861,0.02583,0.125330,0.4472135954999579
+1024,128,16,kmeans_,baseline,4,Fast JL Transform,1,0.00781,0.9259999999999999,0.0463,0.106487,1.0

@@ -1,0 +1,133 @@
+
+###################################################
+### Dimensionality Reduction Methods Comparison ###
+###################################################
+
+Loading highd (d=128) dataset...
+n * d = 1024 * 128
+n_clusters = 16
+R = 3
+n	d	n_clust	test_pr	eval_against	method	k	k/d	vmeas	vmeas_e	time
+1024	128	16	kneigh_	gr-truth	-	-	-	1.000	0.00	0.161282
+1024	128	16	kneigh_	gr-truth	Achliop	50	0.39062	1.000	0.00	0.157222	/
+1024	128	16	kneigh_	baseline	Achliop	50	0.39062	1.000	0.00	0.157003	/
+1024	128	16	kneigh_	gr-truth	Achliop	20	0.15625	1.000	0.00	0.153030	/
+1024	128	16	kneigh_	baseline	Achliop	20	0.15625	1.000	0.00	0.154699	/
+1024	128	16	kneigh_	gr-truth	Achliop	10	0.07812	1.000	0.00	0.152641	/
+1024	128	16	kneigh_	baseline	Achliop	10	0.07812	1.000	0.00	0.159041	/
+1024	128	16	kneigh_	gr-truth	Achliop	5	0.03906	1.000	0.00	0.152992	/
+1024	128	16	kneigh_	baseline	Achliop	5	0.03906	1.000	0.00	0.154537	/
+1024	128	16	kneigh_	gr-truth	Achliop	1	0.00781	0.911	0.01	0.155035	/
+1024	128	16	kneigh_	baseline	Achliop	1	0.00781	0.924	0.03	0.155533	/
+1024	128	16	kneigh_	gr-truth	FastJLT	50	0.39062	0.893	0.02	0.157836	0.1414213562373095
+1024	128	16	kneigh_	baseline	FastJLT	50	0.39062	0.867	0.06	0.157280	0.1414213562373095
+1024	128	16	kneigh_	gr-truth	FastJLT	20	0.15625	0.904	0.02	0.155016	0.22360679774997896
+1024	128	16	kneigh_	baseline	FastJLT	20	0.15625	0.886	0.02	0.156522	0.22360679774997896
+1024	128	16	kneigh_	gr-truth	FastJLT	10	0.07812	0.901	0.04	0.155087	0.31622776601683794
+1024	128	16	kneigh_	baseline	FastJLT	10	0.07812	0.913	0.02	0.155825	0.31622776601683794
+1024	128	16	kneigh_	gr-truth	FastJLT	5	0.03906	0.867	0.03	0.158487	0.4472135954999579
+1024	128	16	kneigh_	baseline	FastJLT	5	0.03906	0.922	0.03	0.155572	0.4472135954999579
+1024	128	16	kneigh_	gr-truth	FastJLT	1	0.00781	0.893	0.03	0.156114	1.0
+1024	128	16	kneigh_	baseline	FastJLT	1	0.00781	0.926	0.01	0.155615	1.0
+1024	128	16	kneigh_	gr-truth	sampDim	50	0.39062	1.000	0.00	0.177112
+1024	128	16	kneigh_	baseline	sampDim	50	0.39062	1.000	0.00	0.157586
+1024	128	16	kneigh_	gr-truth	sampDim	20	0.15625	1.000	0.00	0.158336
+1024	128	16	kneigh_	baseline	sampDim	20	0.15625	1.000	0.00	0.157835
+1024	128	16	kneigh_	gr-truth	sampDim	10	0.07812	1.000	0.00	0.155532
+1024	128	16	kneigh_	baseline	sampDim	10	0.07812	1.000	0.00	0.147796
+1024	128	16	kneigh_	gr-truth	sampDim	5	0.03906	1.000	0.00	0.157028
+1024	128	16	kneigh_	baseline	sampDim	5	0.03906	1.000	0.00	0.156878
+1024	128	16	kneigh_	gr-truth	sampDim	1	0.00781	0.848	0.06	0.157727
+Error! Check the code. The clustering routine used 15 of the 16 available cluster(s).
+1024	128	16	kneigh_	baseline	sampDim	1	0.00781	0.874	0.05	0.158432
+1024	128	16	kneigh_	gr-truth	HVarDim	50	0.39062	1.000	0.00	0.148292
+1024	128	16	kneigh_	baseline	HVarDim	50	0.39062	1.000	0.00	0.157995
+1024	128	16	kneigh_	gr-truth	HVarDim	20	0.15625	1.000	0.00	0.157613
+1024	128	16	kneigh_	baseline	HVarDim	20	0.15625	1.000	0.00	0.158840
+1024	128	16	kneigh_	gr-truth	HVarDim	10	0.07812	1.000	0.00	0.158933
+1024	128	16	kneigh_	baseline	HVarDim	10	0.07812	1.000	0.00	0.157987
+1024	128	16	kneigh_	gr-truth	HVarDim	5	0.03906	1.000	0.00	0.157195
+1024	128	16	kneigh_	baseline	HVarDim	5	0.03906	1.000	0.00	0.159908
+1024	128	16	kneigh_	gr-truth	HVarDim	1	0.00781	0.913	0.00	0.151833
+1024	128	16	kneigh_	baseline	HVarDim	1	0.00781	0.913	0.00	0.158326
+1024	128	16	kneigh_	gr-truth	usePCA	50	0.39062	1.000	0.00	0.152790
+1024	128	16	kneigh_	baseline	usePCA	50	0.39062	1.000	0.00	0.156239
+1024	128	16	kneigh_	gr-truth	usePCA	20	0.15625	1.000	0.00	0.153969
+1024	128	16	kneigh_	baseline	usePCA	20	0.15625	1.000	0.00	0.154621
+1024	128	16	kneigh_	gr-truth	usePCA	10	0.07812	1.000	0.00	0.154358
+1024	128	16	kneigh_	baseline	usePCA	10	0.07812	1.000	0.00	0.156121
+1024	128	16	kneigh_	gr-truth	usePCA	5	0.03906	1.000	0.00	0.163516
+1024	128	16	kneigh_	baseline	usePCA	5	0.03906	1.000	0.00	0.159713
+1024	128	16	kneigh_	gr-truth	usePCA	1	0.00781	0.964	0.02	0.163019
+1024	128	16	kneigh_	baseline	usePCA	1	0.00781	0.954	0.00	0.175932
+1024	128	16	kneigh_	gr-truth	FactAna	50	0.39062	1.000	0.00	0.295463
+1024	128	16	kneigh_	baseline	FactAna	50	0.39062	1.000	0.00	0.280903
+1024	128	16	kneigh_	gr-truth	FactAna	20	0.15625	0.998	0.00	0.163574
+1024	128	16	kneigh_	baseline	FactAna	20	0.15625	0.998	0.00	0.160815
+1024	128	16	kneigh_	gr-truth	FactAna	10	0.07812	1.000	0.00	0.172494
+1024	128	16	kneigh_	baseline	FactAna	10	0.07812	1.000	0.00	0.168773
+1024	128	16	kneigh_	gr-truth	FactAna	5	0.03906	1.000	0.00	0.169398
+1024	128	16	kneigh_	baseline	FactAna	5	0.03906	1.000	0.00	0.171167
+1024	128	16	kneigh_	gr-truth	FactAna	1	0.00781	0.934	0.00	0.171232
+1024	128	16	kneigh_	baseline	FactAna	1	0.00781	0.934	0.00	0.168394
+1024	128	16	kmeans_	gr-truth	-	-	-	1.000	0.00	1.016542
+1024	128	16	kmeans_	gr-truth	Achliop	50	0.39062	1.000	0.00	0.288920	/
+1024	128	16	kmeans_	baseline	Achliop	50	0.39062	1.000	0.00	0.332615	/
+1024	128	16	kmeans_	gr-truth	Achliop	20	0.15625	1.000	0.00	0.300765	/
+1024	128	16	kmeans_	baseline	Achliop	20	0.15625	1.000	0.00	0.293145	/
+1024	128	16	kmeans_	gr-truth	Achliop	10	0.07812	1.000	0.00	0.301921	/
+1024	128	16	kmeans_	baseline	Achliop	10	0.07812	1.000	0.00	0.322612	/
+1024	128	16	kmeans_	gr-truth	Achliop	5	0.03906	1.000	0.00	0.118212	/
+1024	128	16	kmeans_	baseline	Achliop	5	0.03906	1.000	0.00	0.103615	/
+1024	128	16	kmeans_	gr-truth	Achliop	1	0.00781	0.905	0.01	0.126824	/
+1024	128	16	kmeans_	baseline	Achliop	1	0.00781	0.912	0.02	0.125997	/
+1024	128	16	kmeans_	gr-truth	FastJLT	50	0.39062	0.918	0.01	0.347766	0.1414213562373095
+1024	128	16	kmeans_	baseline	FastJLT	50	0.39062	0.919	0.01	0.340327	0.1414213562373095
+1024	128	16	kmeans_	gr-truth	FastJLT	20	0.15625	0.893	0.04	0.251641	0.22360679774997896
+1024	128	16	kmeans_	baseline	FastJLT	20	0.15625	0.866	0.04	0.280959	0.22360679774997896
+1024	128	16	kmeans_	gr-truth	FastJLT	10	0.07812	0.885	0.05	0.262472	0.31622776601683794
+1024	128	16	kmeans_	baseline	FastJLT	10	0.07812	0.874	0.04	0.270106	0.31622776601683794
+1024	128	16	kmeans_	gr-truth	FastJLT	5	0.03906	0.906	0.03	0.109872	0.4472135954999579
+1024	128	16	kmeans_	baseline	FastJLT	5	0.03906	0.861	0.03	0.125330	0.4472135954999579
+1024	128	16	kmeans_	gr-truth	FastJLT	1	0.00781	0.894	0.02	0.108253	1.0
+1024	128	16	kmeans_	baseline	FastJLT	1	0.00781	0.926	0.05	0.106487	1.0
+1024	128	16	kmeans_	gr-truth	sampDim	50	0.39062	1.000	0.00	0.294087
+1024	128	16	kmeans_	baseline	sampDim	50	0.39062	1.000	0.00	0.331623
+1024	128	16	kmeans_	gr-truth	sampDim	20	0.15625	1.000	0.00	0.250895
+1024	128	16	kmeans_	baseline	sampDim	20	0.15625	1.000	0.00	0.289236
+1024	128	16	kmeans_	gr-truth	sampDim	10	0.07812	1.000	0.00	0.343201
+1024	128	16	kmeans_	baseline	sampDim	10	0.07812	1.000	0.00	0.324764
+1024	128	16	kmeans_	gr-truth	sampDim	5	0.03906	1.000	0.00	0.068837
+1024	128	16	kmeans_	baseline	sampDim	5	0.03906	1.000	0.00	0.039586
+1024	128	16	kmeans_	gr-truth	sampDim	1	0.00781	0.891	0.01	0.039134
+1024	128	16	kmeans_	baseline	sampDim	1	0.00781	0.887	0.02	0.038020
+1024	128	16	kmeans_	gr-truth	HVarDim	50	0.39062	1.000	0.00	0.290512
+1024	128	16	kmeans_	baseline	HVarDim	50	0.39062	1.000	0.00	0.271999
+1024	128	16	kmeans_	gr-truth	HVarDim	20	0.15625	1.000	0.00	0.321522
+1024	128	16	kmeans_	baseline	HVarDim	20	0.15625	1.000	0.00	0.280017
+1024	128	16	kmeans_	gr-truth	HVarDim	10	0.07812	1.000	0.00	0.244011
+1024	128	16	kmeans_	baseline	HVarDim	10	0.07812	1.000	0.00	0.252535
+1024	128	16	kmeans_	gr-truth	HVarDim	5	0.03906	1.000	0.00	0.048531
+1024	128	16	kmeans_	baseline	HVarDim	5	0.03906	1.000	0.00	0.041685
+1024	128	16	kmeans_	gr-truth	HVarDim	1	0.00781	0.921	0.00	0.035873
+1024	128	16	kmeans_	baseline	HVarDim	1	0.00781	0.922	0.00	0.041520
+1024	128	16	kmeans_	gr-truth	usePCA	50	0.39062	1.000	0.00	0.274603
+1024	128	16	kmeans_	baseline	usePCA	50	0.39062	1.000	0.00	0.323119
+1024	128	16	kmeans_	gr-truth	usePCA	20	0.15625	1.000	0.00	0.273086
+1024	128	16	kmeans_	baseline	usePCA	20	0.15625	1.000	0.00	0.308908
+1024	128	16	kmeans_	gr-truth	usePCA	10	0.07812	1.000	0.00	0.283092
+1024	128	16	kmeans_	baseline	usePCA	10	0.07812	1.000	0.00	0.345001
+1024	128	16	kmeans_	gr-truth	usePCA	5	0.03906	1.000	0.00	0.137788
+1024	128	16	kmeans_	baseline	usePCA	5	0.03906	1.000	0.00	0.121233
+1024	128	16	kmeans_	gr-truth	usePCA	1	0.00781	0.959	0.00	0.113858
+1024	128	16	kmeans_	baseline	usePCA	1	0.00781	0.958	0.01	0.128058
+1024	128	16	kmeans_	gr-truth	FactAna	50	0.39062	0.981	0.00	0.362760
+1024	128	16	kmeans_	baseline	FactAna	50	0.39062	0.975	0.01	0.357560
+1024	128	16	kmeans_	gr-truth	FactAna	20	0.15625	1.000	0.00	0.283188
+1024	128	16	kmeans_	baseline	FactAna	20	0.15625	1.000	0.00	0.268786
+1024	128	16	kmeans_	gr-truth	FactAna	10	0.07812	1.000	0.00	0.278600
+1024	128	16	kmeans_	baseline	FactAna	10	0.07812	1.000	0.00	0.271726
+1024	128	16	kmeans_	gr-truth	FactAna	5	0.03906	1.000	0.00	0.127055
+1024	128	16	kmeans_	baseline	FactAna	5	0.03906	1.000	0.00	0.129840
+1024	128	16	kmeans_	gr-truth	FactAna	1	0.00781	0.937	0.00	0.143248
+1024	128	16	kmeans_	baseline	FactAna	1	0.00781	0.937	0.00	0.111276

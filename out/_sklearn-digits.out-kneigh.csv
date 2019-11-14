@@ -1,0 +1,38 @@
+n,d,n_clust,test_pr,eval_against,method,methodname,k,k/d,vmeas,vmeas_e1,time,eps
+1797,64,10,kneigh_,gr-truth,0,Baseline,64,1.0,0.904,0.0,0.345678,\
+1797,64,10,kneigh_,gr-truth,0,Baseline,64,1.0,0.904,0.0,0.372479,\
+1797,64,10,kneigh_,gr-truth,0,Baseline,64,1.0,0.904,0.0,0.406793,\
+1797,64,10,kneigh_,gr-truth,0,Baseline,64,1.0,0.904,0.0,0.365760,\
+1797,64,10,kneigh_,gr-truth,0,Baseline,64,1.0,0.904,0.0,0.363075,\
+1797,64,10,kneigh_,gr-truth,0,Baseline,64,1.0,0.904,0.0,0.442336,\
+1797,64,10,kneigh_,gr-truth,0,Baseline,64,1.0,0.904,0.0,0.399430,\
+1797,64,10,kneigh_,baseline,2,Sample dimensions,50,0.78125,0.924,0.00924,0.295930/,nan
+1797,64,10,kneigh_,baseline,2,Sample dimensions,20,0.3125,0.758,0.0379,0.154037/,nan
+1797,64,10,kneigh_,baseline,2,Sample dimensions,10,0.15625,0.46799999999999997,0.00936,0.099660/,nan
+1797,64,10,kneigh_,baseline,2,Sample dimensions,5,0.07812,0.414,0.028980000000000002,0.070746/,nan
+1797,64,10,kneigh_,baseline,2,Sample dimensions,1,0.01562,0.109,0.0545,0.059041/,nan
+1797,64,10,kneigh_,baseline,1,Highest-variance,50,0.78125,0.956,0.0,0.294167/,nan
+1797,64,10,kneigh_,baseline,1,Highest-variance,20,0.3125,0.8859999999999999,0.0,0.162139/,nan
+1797,64,10,kneigh_,baseline,1,Highest-variance,10,0.15625,0.728,0.0,0.105592/,nan
+1797,64,10,kneigh_,baseline,1,Highest-variance,5,0.07812,0.505,0.0,0.069829/,nan
+1797,64,10,kneigh_,baseline,1,Highest-variance,1,0.01562,0.204,0.0,0.060684/,nan
+1797,64,10,kneigh_,baseline,5,PCA,50,0.78125,0.956,0.0,0.435744/,nan
+1797,64,10,kneigh_,baseline,5,PCA,20,0.3125,0.95,0.0,0.282500/,nan
+1797,64,10,kneigh_,baseline,5,PCA,10,0.15625,0.92,0.0,0.220622/,nan
+1797,64,10,kneigh_,baseline,5,PCA,5,0.07812,0.836,0.0,0.185515/,nan
+1797,64,10,kneigh_,baseline,5,PCA,1,0.01562,0.358,0.0,0.159088/,nan
+1797,64,10,kneigh_,baseline,6,Factor Analysis,50,0.78125,0.8590000000000001,0.0,0.506003/,nan
+1797,64,10,kneigh_,baseline,6,Factor Analysis,20,0.3125,0.8859999999999999,0.0,0.333027/,nan
+1797,64,10,kneigh_,baseline,6,Factor Analysis,10,0.15625,0.825,0.0,0.253361/,nan
+1797,64,10,kneigh_,baseline,6,Factor Analysis,5,0.07812,0.748,0.0,0.192050/,nan
+1797,64,10,kneigh_,baseline,6,Factor Analysis,1,0.01562,0.213,0.0,0.168939/,nan
+1797,64,10,kneigh_,baseline,3,Coin flip,50,0.78125,0.884,0.01768,0.371478,/
+1797,64,10,kneigh_,baseline,3,Coin flip,20,0.3125,0.8109999999999999,0.01622,0.238982,/
+1797,64,10,kneigh_,baseline,3,Coin flip,10,0.15625,0.648,0.01944,0.187486,/
+1797,64,10,kneigh_,baseline,3,Coin flip,5,0.07812,0.47100000000000003,0.02826,0.159718,/
+1797,64,10,kneigh_,baseline,3,Coin flip,1,0.01562,0.129,0.059340000000000004,0.132166,/
+1797,64,10,kneigh_,baseline,4,Fast JL Transform,50,0.78125,0.115,0.0414,0.179085,0.1414213562373095
+1797,64,10,kneigh_,baseline,4,Fast JL Transform,20,0.3125,0.10300000000000001,0.051500000000000004,0.161322,0.22360679774997896
+1797,64,10,kneigh_,baseline,4,Fast JL Transform,10,0.15625,0.149,0.050660000000000004,0.152793,0.31622776601683794
+1797,64,10,kneigh_,baseline,4,Fast JL Transform,5,0.07812,0.122,0.02684,0.156076,0.4472135954999579
+1797,64,10,kneigh_,baseline,4,Fast JL Transform,1,0.01562,0.12300000000000001,0.020910000000000005,0.161956,1.0

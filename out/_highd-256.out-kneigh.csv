@@ -1,0 +1,32 @@
+n,d,n_clust,test_pr,eval_against,method,methodname,k,k/d,vmeas,vmeas_e1,time,eps
+1024,256,16,kneigh_,gr-truth,0,Baseline,256,1.0,1.0,0.0,0.157958,\
+1024,256,16,kneigh_,baseline,2,Sample dimensions,50,0.19531,1.0,0.0,0.158050/,nan
+1024,256,16,kneigh_,baseline,2,Sample dimensions,20,0.07812,1.0,0.0,0.151005/,nan
+1024,256,16,kneigh_,baseline,2,Sample dimensions,10,0.03906,1.0,0.0,0.156158/,nan
+1024,256,16,kneigh_,baseline,2,Sample dimensions,5,0.01953,1.0,0.0,0.154661/,nan
+1024,256,16,kneigh_,baseline,2,Sample dimensions,1,0.00391,0.9259999999999999,0.027779999999999996,0.158288/,nan
+1024,256,16,kneigh_,baseline,1,Highest-variance,50,0.19531,1.0,0.0,0.158397/,nan
+1024,256,16,kneigh_,baseline,1,Highest-variance,20,0.07812,1.0,0.0,0.157706/,nan
+1024,256,16,kneigh_,baseline,1,Highest-variance,10,0.03906,1.0,0.0,0.157904/,nan
+1024,256,16,kneigh_,baseline,1,Highest-variance,5,0.01953,1.0,0.0,0.157899/,nan
+1024,256,16,kneigh_,baseline,1,Highest-variance,1,0.00391,0.8959999999999999,0.0,0.151084/,nan
+1024,256,16,kneigh_,baseline,5,PCA,50,0.19531,1.0,0.0,0.153856/,nan
+1024,256,16,kneigh_,baseline,5,PCA,20,0.07812,1.0,0.0,0.155498/,nan
+1024,256,16,kneigh_,baseline,5,PCA,10,0.03906,1.0,0.0,0.155540/,nan
+1024,256,16,kneigh_,baseline,5,PCA,5,0.01953,1.0,0.0,0.159024/,nan
+1024,256,16,kneigh_,baseline,5,PCA,1,0.00391,0.996,0.00996,0.155953/,nan
+1024,256,16,kneigh_,baseline,6,Factor Analysis,50,0.19531,1.0,0.0,0.266263/,nan
+1024,256,16,kneigh_,baseline,6,Factor Analysis,20,0.07812,1.0,0.0,0.202807/,nan
+1024,256,16,kneigh_,baseline,6,Factor Analysis,10,0.03906,1.0,0.0,0.170368/,nan
+1024,256,16,kneigh_,baseline,6,Factor Analysis,5,0.01953,1.0,0.0,0.170968/,nan
+1024,256,16,kneigh_,baseline,6,Factor Analysis,1,0.00391,0.9540000000000001,0.0,0.168106/,nan
+1024,256,16,kneigh_,baseline,3,Coin flip,50,0.19531,1.0,0.0,0.167689,/
+1024,256,16,kneigh_,baseline,3,Coin flip,20,0.07812,1.0,0.0,0.169471,/
+1024,256,16,kneigh_,baseline,3,Coin flip,10,0.03906,1.0,0.0,0.165246,/
+1024,256,16,kneigh_,baseline,3,Coin flip,5,0.01953,1.0,0.0,0.165626,/
+1024,256,16,kneigh_,baseline,3,Coin flip,1,0.00391,0.884,0.05304,0.167599,/
+1024,256,16,kneigh_,baseline,4,Fast JL Transform,50,0.19531,0.966,0.0,0.167806,0.1414213562373095
+1024,256,16,kneigh_,baseline,4,Fast JL Transform,20,0.07812,0.919,0.05514,0.168355,0.22360679774997896
+1024,256,16,kneigh_,baseline,4,Fast JL Transform,10,0.03906,0.956,0.019119999999999998,0.166951,0.31622776601683794
+1024,256,16,kneigh_,baseline,4,Fast JL Transform,5,0.01953,0.9209999999999999,0.02763,0.165056,0.4472135954999579
+1024,256,16,kneigh_,baseline,4,Fast JL Transform,1,0.00391,0.9259999999999999,0.01852,0.170832,1.0
