@@ -5,6 +5,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.cluster import MeanShift, estimate_bandwidth
 from scipy.spatial.distance import cdist
 
+# K-Means
 def kmeans_(data, n_clusters, y):
     """K-means"""
     kmeans = KMeans(
@@ -14,6 +15,7 @@ def kmeans_(data, n_clusters, y):
         ).fit(data)
     return kmeans.labels_
 
+# K-Nearest Neighbors
 def kneigh_(data, n_clusters, y):
     """KNN"""
     k=max(10, int(data.shape[0]/n_clusters/3))
@@ -24,6 +26,10 @@ def kneigh_(data, n_clusters, y):
     neigh.fit(data, y)
     return neigh.predict(data)
 
+
+###########################################################################
+# Other Attempts...
+###########################################################################
 
 def spectr_(data, n_clusters, y):
     """Spectral Clustering"""

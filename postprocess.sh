@@ -1,5 +1,6 @@
 #!/bin/sh
 #
+# This scripts selects the interesting data and outputs the results in csv format.
 
 set -x
 for i in *.out; do

@@ -5,6 +5,8 @@ import numpy as np
 import pandas as pd
 from random import random
 
+# High dimensional real-world datasets
+
 loadGISETTE_tiny = lambda : loadGISETTE(set="valid")   # N=1000, k=2, d=5000
 loadGISETTE_big  = lambda : loadGISETTE(set="train")   # N=6000, k=2, d=5000
 loadGISETTE_huge = lambda : loadGISETTE(set="all")     # N=7000, k=2, d=5000

@@ -79,6 +79,7 @@ def FastJLT2(data, k, y=None, silent=False):
     # fjlt(data, k)
     return fjlt(data, k, q), ("%0.3f" % (eps))
 
+# Our failed attempt at Fast JLT
 def FastJLT3(data, k, y=None, silent=False):
     """Fast Johnson-Lindenstrauss Transform method"""
     d, n = data.shape
@@ -127,7 +128,7 @@ def sampDim(data, k, y=None, silent=False):
     nonzero = np.random.choice(d,k,replace=False)
     return data[:,nonzero], ""
 
-# Select the features with most variance
+# Select the features with highest (normalized) variance
 def HVarDim(data, k, y=None, silent=False):
     """Select high-variance dimensions"""
     n, d = data.shape

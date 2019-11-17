@@ -46,7 +46,10 @@ def plotImg(digit):
     plt.imshow(digit, cmap='gray')
     plt.show()
 
-############################ OTHER ############################
+###########################################################################
+# Other Attempts
+###########################################################################
+
 # This serves for linearizing the matrix without losing too much
 #  of its 2d intter structure
 def descriptor(img, depth=3):

@@ -6,6 +6,9 @@ import pandas as pd
 from random import random
 import sys
 
+# This scripts helps postprocessing by outputting the outputs in csv format
+# It can be easily tweaked for semi-manual/fine correction
+
 def main():
     output_file = sys.argv[1]
     print(output_file)

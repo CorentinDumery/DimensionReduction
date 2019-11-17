@@ -14,7 +14,6 @@ from test_problems import *
 
 from data_digits   import *
 from data_highd    import *
-from data_taxis    import *
 from data_real     import *
 
 import warnings
@@ -39,8 +38,8 @@ load_dataset_funs = [
     # loadDigits,
     loadMNIST_tiny,
     loadGISETTE_tiny,
-    # TODO FIX loadDEXTER_tiny,
-    # TODO FIX loadDOROT_tiny,
+    # TODO: FIX loadDEXTER_tiny,
+    # TODO: FIX loadDOROT_tiny,
     #loadHighD_128,
     #loadHighD_256,
     #loadHighD_512,

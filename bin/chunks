@@ -1,0 +1,102 @@
+https://www.analyticsvidhya.com/blog/2018/08/dimensionality-reduction-techniques-python/
+
+
+\subsection*{Introduction}
+Nowadays, in the era of ``Big Data'', there is rising availability of larger and larger datasets. This is good, because more data allows for more knowledge to be discovered; however, the size of a datasets is still likely to be an impediment in many ways, and not solely due to a higher cpu workload and memory storage required.
+
+In particular, when it comes to performing tasks on high-dimensional data, a much more deeply rooted problem in the mathematical landscape itself arises, commonly known as the ``curse of dimensionality'': higher dimensional spaces carry geometric unexpected and counterintuitive behaviors.
+To name a few side effects: it is known that the euclidian distance between any pair of points of a distribution tends to be the same when the data is distributed across more dimensions. Indeed, the same data distributed on higher dimensions is very likely to be sparse, and ... have a more difficult structure to grap mindwise (wtf?).
+% cite...
+% TODO: elaborate on many other problems. ... name more side effects, e.g overfitting (see https://towardsdatascience.com/dimensionality-reduction-for-machine-learning-80a46c2ebb7e ) overfitting
+% https://towardsdatascience.com/the-curse-of-dimensionality-f07c66128fe1
+To overcome this issues, research has been done on ``dimensionality reduction'' techniques, namely, methods to reduce the number of dimensions the data ``span across'' (...).
+Besides the obvious ``less storage and computation'' needed, dimensionality reduction has a number of benefits, including the possibility of noise/redundancies removal and, well, alleviate the effects of the course of dimensionality.
+Dimensionality techniques are also used for visualization, through which a human may have a clearer understanding of the data patterns.
+
+When a performing a task such as clustering on high dimensional data, it is expected for most of the information to somehow be redundant, and that likely there are ways of compressing the data to less dimensions, while still maintaining the what matters for the task to be carried out. Indeed, representing data with less storage leads to part of the information being lost, therefore a major concern with dim. reductions is for the inner structure of the data to remain ``recognisable'' by the algorithms used for the tasks (... say better). Therefore, research in dimensionality reduction has produced techniques for ``feature engineering'', that is, designing reductions for which the level of destruction of data distributions can be bounded in some way.
+
+% Comprehensive Guide to 12 Dimensionality Reduction Techniques
+Perhaps, the simplest approach to dim. reduction is to drop some useless variables. As a first example, one might want to drop variables which variance is too low. This approach is called ``Low Variance Filter'', and it leverages the fact that for a variable to effectively contribute to datapoints overall information withing the dataset, it is expected for the variable to yield different values for different datapoints. A second criteria to select drop variables to drop is correlation: we could have many variables that are correlated with each other, i.e within some error, one can always deduce one of them from the others, therefore one of them can be dropped. Unfortunately, the cost of checking every possible correlation set is exponential in the number of dimensions, so different approaches arise for approximating this search.
+- Factor Analysis ...
+- Principal Component Analysis actually combines both ideas ...: namely considering both correlation groups and the variables' variances.
+- ICA ...
+- Linear Discriminant Analysis ...
+
+\iffalse
+    PCA (Principal Component Analysis) : Popularly used for dimensionality reduction in continuous data, PCA rotates and projects data along the direction of increasing variance. The features with the maximum variance are the principal components.
+    Factor Analysis : a technique that is used to reduce a large number of variables into fewer numbers of factors. The values of observed data are expressed as functions of a number of possible causes in order to find which are the most important. The observations are assumed to be caused by a linear transformation of lower dimensional latent factors and added Gaussian noise.
+    LDA (Linear Discriminant Analysis): projects data in a way that the class separability is maximised. Examples from same class are put closely together by the projection. Examples from different classes are placed far apart by the projection
+\fi
+
+% https://towardsdatascience.com/dimensionality-reduction-for-machine-learning-80a46c2ebb7e
+Different linear approaches to dim. reduction involve independently projecting the single data entries, say, from a space $R^n$ to a space $R^k, k\ll d$, and proving that some `non-destruction'' property applies.
+
+\subsection*{Johnson-Lindenstrauss Transforms}
+Now, consider the following property for a dim. reduction $f$:
+$$\exists \epsilon \in [0,1], \forall u,v\in X\subset \mathbb{R}^d, (1-\epsilon)\|u-v\|^2 \leq \|f(u)-f(v)\|^2 \leq (1+\epsilon)\|u-v\|^2$$
+This property states that the pairwise L2 distances in the original data are not perturbed too much during the reduction.
+
+A well-known result which goes by the name of ``Johnson-Lindenstrauss lemma'' states that, for $k$ large enough, for any input set of datapoints, a function with this property exists [1], % cite properly...
+and such reductions are called Johnson-Lindenstrauss transforms.
+In our project we investigated two efficient ways of computing such reductions; the reductions here consist of linear matrices that projects the data onto a $k$-hyperplane in $\mathbb{R}^d$ passing through the origin.
+
+In \textit{Database-friendly random projections: Johnson-Lindenstrauss with binary coins}, D. Achlioptas describes simple routines for deriving the matrix $R$, where the elements are randomly and independently sampled in ${-1,1}$ or ${-1,0,1}$ according to a naive distributions [2]. % cite properly
+... explain
+... how it's built, phi = R ...
+Another well-known JL transform was defined by Ailon N. and Chazelle B. in [3]: the \textit{Fast Johnson-Lindenstrauss Transform} (FJLT).
+... explain
+... how it's built, phi = PHD...
+... Proof of FJLT: maybe just explain the idea, maybe not a full proof, although it would be good to have all of the passages on the board and walk very quickly through them. Why should we fixate on them when many times he has been really quick at proving things..?
+\\
+\\
+\\
+
+$$
+H_{i,j}=d^{-1/2}(-1)^{\langle\i-1,j-1\rangle} \\
+$$
+$$
+D_{i,i}=\pm 1
+$$
+$$\forall s>0$$
+$$
+u_1=\sum_{i=1}^{d}\pm d^{-1/2} x_i
+$$
+
+\begin{align*}
+\mathrm{E}[e^{sdu_1}] & =\prod_{i=1}^{d} \mathrm{E}[e^{s d (\pm d^{-1/2}) x_i}]\\
+             & =\prod_{i=1}^{d} cosh(s \sqrt{d} x_i)\\
+             & \leq \prod_{i=1}^{d} e^{s^2 d x_i^2 /2 } \shortrnote{(using $cosh(x) \leq e^{x^2/2}$)}\\
+             & \leq e^{s^2 d \|x\|_2^2/2}
+\end{align*}
+
+
+\begin{align*}
+\mathrm{E}[e^{sdu_1}] \leq e^{s^2 d \|x\|_2^2/2} \shortrnote{(1)}
+\end{align*}
+
+
+
+$$
+(1-\epsilon)\alpha\|x\|_1\leq \mathrm{E}[\|y\|_1] \leq (1+\epsilon)\alpha\|x\|_1
+$$
+a
+
+($\alpha = k\sqrt{2\pi^{-1}}$)
+
+\\
+
+
+
+Is even there space then for results? Buhu
+
+\paragraph*{Our Project}
+In our project, we tested and compare the goodness of these reduction techniques over some datasets. We considered clustering as our test problem ..., and two different algorithms for it, namely K-means and K-Nearest neighbors.
+briefly how kmeans works...
+briefly how knn works...
+how we compare performances: v-measure computed for comparing two different clusterings...
+We mainly focused on real-world data:
+MNIST (image data)
+then compare with synthetic data (high-d dataset)
+
+\subsection*{Results} (Can't really pillage these. MAKE THEM)
+Some tables and plots displaying our scans
